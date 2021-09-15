@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex items-center justify-center">
-      <p class="font-extrabold mt-10 text-6xl">22,9</p>
+      <p class="font-extrabold mt-10 text-6xl">{{ getCurrentTemp }}</p>
       <div>
         <p>c</p>
       </div>
@@ -13,10 +13,29 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "TempValues",
-  props: {
-    msg: String,
+  props: {},
+  computed: {
+    ...mapGetters("temp", ["getCurrentTemp"]),
+  },
+  created() {
+    // setInterval(this.fetchCurrentTemp, 1000);
+  },
+  mounted() {
+    setInterval(() => {
+      this.fetchCurrentTemp();
+    }, 5000);
+  },
+  data() {
+    return {
+      currentValue: 0.0,
+    };
+  },
+  methods: {
+    ...mapActions("temp", ["fetchCurrentTemp"]),
   },
 };
 </script>
