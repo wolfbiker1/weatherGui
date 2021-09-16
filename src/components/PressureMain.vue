@@ -14,7 +14,7 @@
       </article>
     </section>
 
-    <footer class="text-center p-2">
+    <footer class="text-center">
       <PressureControlBar />
     </footer>
   </div>

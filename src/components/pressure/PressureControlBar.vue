@@ -1,42 +1,46 @@
 <template>
-  <div class="inline-flex">
+  <div class="inline-flex gap-6">
+    <!-- <div class="inner">1</div> -->
+    <!-- <div class="inner">2</div> -->
+    <!-- <div class="inner">3</div> -->
     <button
       class="
-        bg-dark-gray
-        hover:bg-gray-400
+        hover:bg-soft-gray
+        text-gray-300
         font-bold
         py-1
-        px-1
-        rounded-l
-        border border-gray-font
+        px-4
+        border border-ice-blue
+        rounded
       "
     >
-      Min
+      min
     </button>
     <button
       class="
-        bg-dark-gray
-        hover:bg-gray-400
+        hover:bg-ice-blue
+        text-gray-300
         font-bold
         py-1
-        px-1
-        border border-gray-font
+        px-4
+        border border-ice-blue
+        rounded
       "
     >
-      Avg
+      avg
     </button>
     <button
       class="
-        bg-dark-gray
-        hover:bg-gray-400
+        hover:bg-blue-700
+        text-gray-300
         font-bold
         py-1
-        px-1
-        rounded-r
-        border border-gray-font
+        px-4
+        border border-ice-blue
+        rounded
       "
     >
-      Max
+      max
     </button>
   </div>
 </template>
@@ -51,4 +55,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.inner {
+  position: absolute;
+}
+</style>

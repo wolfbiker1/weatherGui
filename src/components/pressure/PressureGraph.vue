@@ -104,7 +104,6 @@ export default {
       const getYs = () => {
         return dataset.map((e) => e.y);
       };
-      console.log(Math.min(...getYs()));
       const y = this.createYAxis(
         Math.min(...getYs()),
         Math.max(...getYs()),
