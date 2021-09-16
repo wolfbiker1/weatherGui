@@ -16,7 +16,8 @@ const getters = {
 
 const mutations = {
   storeCurrentPressure(state, pressure) {
-    state.currentPressure = pressure;
+    state.currentPressure = pressure.value;
+    state.history.push({ x: pressure.time, y: pressure.value });
   },
   storeCurrentHistory(state, history) {
     state.history = history;

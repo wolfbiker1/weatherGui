@@ -17,10 +17,11 @@ export default {
     ...mapGetters("pressure", ["getCurrentHistory"]),
   },
   mounted() {
+    this.fetchHistory().then(() => {
+      this.drawPlot();
+    });
     setInterval(() => {
-      this.fetchHistory().then(() => {
-        this.drawPlot();
-      });
+      this.drawPlot();
     }, 15000);
   },
   data() {
@@ -44,38 +45,8 @@ export default {
   },
   methods: {
     ...mapActions("pressure", ["fetchHistory"]),
-    drawPlot() {
-      console.log("draw...");
-      d3.select("#bar").remove();
-      // set the dimensions and margins of the graph
-      const margin = { top: 20, right: 20, bottom: 50, left: 70 },
-        width = 500 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
-
-      const start = this.getCurrentHistory[0].x;
-      const end = this.getCurrentHistory[this.getCurrentHistory.length - 1].x;
-
-      /*** DO NOT DELETE!!!! ***/
-      // short time period
-      var x = d3
-        .scaleTime()
-        .domain([new Date(start), new Date(end)])
-        .range([0, width]);
-
-      // few days
-      this.mode = 0;
-      // const x = d3
-      //   .scaleTime()
-      //   .domain([
-      //     new Date("1995-12-13T12:24:00"),
-      //     new Date("1995-12-13T17:24:00"),
-      //   ])
-      //   .range([0, width]);
-
-      const y = d3.scaleLinear().domain([1019, 1021]).range([height, 0]);
-
-      // define the line
-      const valueline = d3
+    createDataLine(x, y) {
+      return d3
         .line()
         .x(function (d) {
           return x(new Date(d.x));
@@ -84,36 +55,147 @@ export default {
           return y(d.y);
         })
         .curve(d3.curveMonotoneX);
+    },
+    createArea(x, y) {
+      return d3
+        .area()
+        .x(function (d) {
+          return x(new Date(d.x));
+        })
+        .y0(window.height)
+        .y1(function (d) {
+          return y(d.y);
+        });
+    },
+    createXAxis(start, end, window) {
+      return d3
+        .scaleTime()
+        .domain([new Date(start), new Date(end)])
+        .range([0, window.width]);
+    },
+    createYAxis(start, end, window) {
+      return d3.scaleLinear().domain([start, end]).range([window.height, 0]);
+    },
+    setUpWindow() {
+      const margin = { top: 20, right: 20, bottom: 50, left: 70 };
+      return {
+        width: 500 - margin.left - margin.right,
+        height: 300 - margin.top - margin.bottom,
+        margin: margin,
+      };
+    },
+    removePlot() {
+      d3.select("#bar").remove();
+      d3.select("#yaxis").remove();
+    },
+    drawPlot() {
+      const dataset = this.getCurrentHistory;
+      this.removePlot();
+
+      // set the dimensions and margins of the graph
+      const window = this.setUpWindow();
+      const start = this.getCurrentHistory[0].x;
+      const end = this.getCurrentHistory[this.getCurrentHistory.length - 1].x;
+
+      /*** DO NOT DELETE!!!! ***/
+      // short time period
+      var x = this.createXAxis(start, end, window);
+
+      const getYs = () => {
+        return dataset.map((e) => e.y);
+      };
+      console.log(Math.min(...getYs()));
+      const y = this.createYAxis(
+        Math.min(...getYs()),
+        Math.max(...getYs()),
+        window
+      );
+
+      const valueline = this.createDataLine(x, y);
+      const area = d3
+        .area()
+        .x(function (d) {
+          return x(new Date(d.x));
+        })
+        .y0(window.height)
+        .y1(function (d) {
+          return y(d.y);
+        });
+      // few days
+      this.mode = 0;
+      /*** DO NOT DELETE!!!! ***/
+      // long time period
+      // const x = d3
+      //   .scaleTime()
+      //   .domain([
+      //     new Date("1995-12-13T12:24:00"),
+      //     new Date("1995-12-13T17:24:00"),
+      //   ])
+      //   .range([0, width]);
+
+      // main
       const svg = d3
         .select(".pressurePlot")
         .append("svg")
         .attr("id", "bar")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("width", window.width + window.margin.left + window.margin.right)
+        .attr(
+          "height",
+          window.height + window.margin.top + window.margin.bottom
+        )
         .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr(
+          "transform",
+          "translate(" + window.margin.left + "," + window.margin.top + ")"
+        );
 
-      // const dd = [
-      //   { x: new Date("1995-12-13T12:24:00"), y: 1024.2 },
-      //   { x: new Date("1995-12-13T12:51:00"), y: 1028.2 },
-      //   { x: new Date("1995-12-13T13:25:00"), y: 1027.2 },
-      //   { x: new Date("1995-12-13T15:24:00"), y: 1021.2 },
-      //   { x: new Date("1995-12-13T16:54:00"), y: 1018.2 },
-      // ];
+      svg
+        .append("linearGradient")
+        .attr("id", "temperature-gradient")
+        .attr("gradientUnits", "userSpaceOnUse")
+        .attr("x1", 0)
+        .attr("y1", y(1010))
+        .attr("x2", 0)
+        .attr("y2", y(1030))
+        .selectAll("stop")
+        .data([
+          { offset: "0%", color: "steelblue" },
+          { offset: "50%", color: "gray" },
+          { offset: "100%", color: "red" },
+        ])
+        .enter()
+        .append("stop")
+        .attr("offset", function (d) {
+          return d.offset;
+        })
+        .attr("stop-color", function (d) {
+          return d.color;
+        });
 
-      const dd = this.getCurrentHistory;
+      // Add the area
       svg
         .append("path")
-        .data([dd])
-        .style("fill", "none")
+        .datum(dataset)
+        .attr("class", "area")
+        .attr("fill", "rgb(207, 228, 255)")
+        .attr("fill-opacity", 0.1)
+        .attr("stroke", "none")
+        .attr("d", area);
+
+      svg
+        .append("path")
+        .data([dataset])
         .attr("class", "line")
-        .style("stroke", "#b77efc")
+        .attr("fill", "none")
+        .attr("stroke-width", 1)
+        .attr("opacity", 1)
+        .style("stroke", "rgb(0, 204, 255)")
         .attr("d", valueline);
 
       // Add the x Axis
       svg
         .append("g")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + window.height + ")")
         .call(
           d3
             .axisBottom(x)
@@ -124,11 +206,20 @@ export default {
         );
 
       // Add the y Axis
-      svg.append("g").call(d3.axisLeft(y));
+      svg.append("g").attr("id", "yaxis").call(d3.axisLeft(y));
     },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="css"></style>
+<style scoped lang="css">
+/* .area {
+  fill: rgb(0, 204, 255);
+  stroke-width: 0;
+} */
+.area {
+  fill: url(#temperature-gradient);
+  stroke-width: 05px;
+}
+</style>
