@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="flex items-center justify-center">
-      <p class="font-extrabold mt-10 text-5xl">1021,4</p>
+      <p class="font-extrabold mt-10 text-5xl">{{ getCurrentPressure }}</p>
       <div>
-        <p>c</p>
+        <p>hPa</p>
       </div>
     </div>
     <div>
@@ -13,10 +13,28 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
-  name: "BrightnessValues",
-  props: {
-    msg: String,
+  name: "PressureValues",
+  computed: {
+    ...mapGetters("pressure", ["getCurrentPressure"]),
+  },
+  created() {
+    // setInterval(this.fetchCurrentTemp, 1000);
+  },
+  mounted() {
+    setInterval(() => {
+      this.fetchCurrentPressure();
+    }, 5000);
+  },
+  data() {
+    return {
+      currentValue: 0.0,
+    };
+  },
+  methods: {
+    ...mapActions("pressure", ["fetchCurrentPressure"]),
   },
 };
 </script>

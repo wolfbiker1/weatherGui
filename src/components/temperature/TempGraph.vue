@@ -60,12 +60,10 @@ export default {
       // define the line
       const valueline = d3
         .line()
-        .x(function (d, i) {
-          console.log(i);
+        .x(function (d) {
           return x(d.x);
         })
         .y(function (d) {
-          console.log(d.y);
           return y(d.y);
         });
 
@@ -78,11 +76,11 @@ export default {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       const dd = [
-        { x: new Date("1995-12-13T12:24:00"), y: 9 },
-        { x: new Date("1995-12-14T12:51:00"), y: 9 },
-        { x: new Date("1995-12-15T13:25:00"), y: 14 },
-        { x: new Date("1995-12-16T15:24:00"), y: 11 },
-        { x: new Date("1995-12-17T16:54:00"), y: 13 },
+        { x: new Date("1995-12-13 12:24:00"), y: 9 },
+        { x: new Date("1995-12-14 12:51:00"), y: 9 },
+        { x: new Date("1995-12-15 13:25:00"), y: 14 },
+        { x: new Date("1995-12-16 15:24:00"), y: 11 },
+        { x: new Date("1995-12-17 16:54:00"), y: 13 },
       ];
 
       svg

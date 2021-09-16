@@ -60,8 +60,7 @@ export default {
       // define the line
       const valueline = d3
         .line()
-        .x(function (d, i) {
-          console.log(i);
+        .x(function (d) {
           return x(d.x);
         })
         .y(function (d) {
