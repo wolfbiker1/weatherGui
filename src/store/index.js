@@ -4,6 +4,7 @@ import temp from "./mod/temp";
 import pressure from "./mod/pressure";
 import brightness from "./mod/brightness";
 import humidity from "./mod/humidity";
+import peaks from "./mod/peaks";
 
 Vue.use(Vuex);
 
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     brightness,
     pressure,
     humidity,
+    peaks,
   },
 });

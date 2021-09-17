@@ -21,7 +21,6 @@ const mutations = {
   },
   storeCurrentHistory(state, history) {
     state.history = history;
-    
   },
 };
 

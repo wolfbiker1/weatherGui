@@ -2,7 +2,7 @@
   <div>
     <div>
       <div class="flex items-center justify-center">
-        <p class="font-extrabold mt-10 text-5xl">{{getCurrentHumidity}}</p>
+        <p class="font-extrabold mt-10 text-5xl">{{ getCurrentHumidity }}</p>
         <!-- <p class="font-extrabold mt-10 text-5xl">1020.24</p> -->
         <div>
           <p>%</p>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "HumidityValues",
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     ...mapActions("humidity", ["fetchCurrentHumidity"]),
-  }
+  },
 };
 </script>
 

@@ -16,8 +16,10 @@
       <div class="block text-center mt-4">
         <div class="p-2">
           <div class="inline block">
-            <span class="text-ice-blue"><i> Max </i></span>
-            <span><i> 1023,21 hPa </i></span>
+            <span class="text-ice-blue" @click="foo"><i> Max </i></span>
+            <span
+              ><i> {{ getPeakData("pressure").max.toFixed(2) }} hPa </i></span
+            >
           </div>
         </div>
         <div class="p-2">
@@ -44,12 +46,14 @@ export default {
   name: "PressureValues",
   computed: {
     ...mapGetters("pressure", ["getCurrentPressure"]),
+    ...mapGetters("peaks", ["getPeakData"]),
   },
   created() {
     // setInterval(this.fetchCurrentTemp, 1000);
   },
   mounted() {
     setInterval(() => {
+      this.fetchPeakData();
       this.fetchCurrentPressure();
     }, 5000);
   },
@@ -59,7 +63,11 @@ export default {
     };
   },
   methods: {
+    foo() {
+      console.log(this.getPeakData());
+    },
     ...mapActions("pressure", ["fetchCurrentPressure"]),
+    ...mapActions("peaks", ["fetchPeakData"]),
   },
 };
 </script>
