@@ -1,38 +1,38 @@
 <template>
   <div>
     <header class="text-center m-2">
-      <h1 class="text-3xl">Air Pressure</h1>
+      <h1 class="text-3xl">Humidity</h1>
     </header>
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
-        <PressureValues />
+        <HumidityValues />
       </div>
 
       <article class="p-2 m-2">
-        <PressureGraph />
+        <HumidityGraph />
       </article>
     </section>
 
-    <footer class="text-center m-2">
-      <PressureControlBar />
+    <footer class="text-center p-2">
+      <HumidityControlBar />
     </footer>
   </div>
 </template>
 
 <script>
-import PressureValues from "./pressure/PressureValues.vue";
-import PressureGraph from "./pressure/PressureGraph.vue";
-import PressureControlBar from "./pressure/PressureControlBar.vue";
+import HumidityValues from "./humidity/HumidityValues.vue";
+import HumidityGraph from "./humidity/HumidityGraph.vue";
+import HumidityControlBar from "./humidity/HumidityControlBar.vue";
 
 export default {
-  name: "PressureMain",
+  name: "HumidityMain",
   props: {
     msg: String,
   },
   components: {
-    PressureValues,
-    PressureGraph,
-    PressureControlBar,
+    HumidityValues,
+    HumidityGraph,
+    HumidityControlBar,
   },
   methods: {},
 };
@@ -47,7 +47,7 @@ section {
 }
 
 /* Style the navigation menu */
-pressureval {
+tempval {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;

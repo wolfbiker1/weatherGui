@@ -1,14 +1,14 @@
 <template>
   <div>
-    <header class="text-center">
-      <h2>TEMP</h2>
+    <header class="text-center m-2">
+      <h1 class="text-3xl">Outdoor Temperature</h1>
     </header>
     <section>
-      <div class="tempval p-4">
+      <div class="pressureval pl-2 m-2 mt-8">
         <TempValues />
       </div>
 
-      <article class="p-3">
+      <article class="p-2 m-2">
         <TempGraph />
       </article>
     </section>

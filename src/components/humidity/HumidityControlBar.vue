@@ -7,7 +7,7 @@
         font-bold
         py-1
         px-4
-        border border-ice-blue
+        border border-sharp-green
         rounded
       "
     >
@@ -20,7 +20,7 @@
         font-bold
         py-1
         px-4
-        border border-ice-blue
+        border border-sharp-green
         rounded
       "
     >
@@ -33,7 +33,7 @@
         font-bold
         py-1
         px-4
-        border border-ice-blue
+        border border-sharp-green
         rounded
       "
     >
@@ -46,7 +46,7 @@
         font-bold
         py-1
         px-4
-        border border-ice-blue
+        border border-sharp-green
         rounded
       "
     >
@@ -55,9 +55,10 @@
   </div>
 </template>
 
+
 <script>
 export default {
-  name: "PressureControlBar",
+  name: "HumidityControlBar",
   props: {
     msg: String,
   },
@@ -65,8 +66,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-.inner {
-  position: absolute;
-}
-</style>
+<style scoped lang="scss"></style>

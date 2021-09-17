@@ -1,13 +1,38 @@
 <template>
   <div>
-    <div class="flex items-center justify-center">
-      <p class="font-extrabold mt-10 text-6xl">{{ getCurrentTemp }}</p>
+    <div>
+      <div class="flex items-center justify-center">
+        <!-- <p class="font-extrabold mt-10 text-5xl">{{ getCurrentPressure }}</p> -->
+        <p class="font-extrabold mt-10 text-5xl">1020.24</p>
+        <div>
+          <p>°C</p>
+        </div>
+      </div>
       <div>
-        <p>c</p>
+        <p>1021,4</p>
       </div>
     </div>
     <div>
-      <p>21,4</p>
+      <div class="block text-center mt-4">
+        <div class="p-2">
+          <div class="inline block">
+            <span class="text-sharp-yellow"><i> Max </i></span>
+            <span><i> 1023,21 hPa </i></span>
+          </div>
+        </div>
+        <div class="p-2">
+          <div class="inline block">
+            <span class="text-sharp-yellow"><i> Avg </i></span>
+            <span><i> 1023,21 hPa </i></span>
+          </div>
+        </div>
+        <div class="p-2">
+          <div class="inline block">
+            <span class="text-sharp-yellow"><i> Min </i></span>
+            <span><i> 1023,21 hPa </i></span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

@@ -1,45 +1,60 @@
 <template>
-  <div class="inline-flex">
+  <div class="inline-flex gap-6">
     <button
       class="
-        bg-dark-gray
-        hover:bg-gray-400
+        hover:bg-soft-gray
+        text-gray-300
         font-bold
         py-1
-        px-1
-        rounded-l
-        border border-gray-font
+        px-4
+        border border-sharp-red
+        rounded
       "
     >
-      Min
+      -24h
     </button>
     <button
       class="
-        bg-dark-gray
-        hover:bg-gray-400
+        hover:bg-ice-blue
+        text-gray-300
         font-bold
         py-1
-        px-1
-        border border-gray-font
+        px-4
+        border border-sharp-red
+        rounded
       "
     >
-      Avg
+      trend
     </button>
     <button
       class="
-        bg-dark-gray
-        hover:bg-gray-400
+        hover:bg-blue-700
+        text-gray-300
         font-bold
         py-1
-        px-1
-        rounded-r
-        border border-gray-font
+        px-4
+        border border-sharp-red
+        rounded
       "
     >
-      Max
+      +
+    </button>
+    <button
+      class="
+        hover:bg-blue-700
+        text-gray-300
+        font-bold
+        py-1
+        px-4
+        border border-sharp-red
+        rounded
+      "
+    >
+      -
     </button>
   </div>
 </template>
+
 
 <script>
 export default {

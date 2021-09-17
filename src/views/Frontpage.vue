@@ -9,17 +9,17 @@
           <div class="border-4 border-gray-600">
             <PressureMain />
           </div>
-          <div class="border-4 border-gray-600">
+          <!-- <div class="border-4 border-gray-600">
             <p>yes</p>
           </div>
           <div class="border-4 border-gray-600">
             <p>yes</p>
-          </div>
+          </div> -->
           <div class="border-4 border-gray-600">
             <BrightnessMain />
           </div>
           <div class="border-4 border-gray-600">
-            <p>yes</p>
+            <HumidityMain />
           </div>
         </div>
       </div>
@@ -31,6 +31,7 @@
 import TemperatureMain from "@/components/TemperatureMain.vue"; // @ is an alias to /src
 import PressureMain from "@/components/PressureMain.vue"; // @ is an alias to /src
 import BrightnessMain from "@/components/BrightnessMain.vue"; // @ is an alias to /src
+import HumidityMain from "@/components/HumidityMain.vue"; // @ is an alias to /src
 
 export default {
   name: "Frontpage",
@@ -38,6 +39,7 @@ export default {
     TemperatureMain,
     PressureMain,
     BrightnessMain,
+    HumidityMain,
   },
 };
 </script>

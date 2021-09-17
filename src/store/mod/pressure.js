@@ -31,15 +31,12 @@ const actions = {
     });
   },
   async fetchHistory({ commit }) {
-    return axios.get("/foo").then((res) => {
-      // let foo = res.data.split(",").map(res => ({ x: res[0], y: res[1] } ));
+    return axios.get("/hist/for/humidity").then((res) => {
       const dataAsJson = [];
       res.data.forEach((res) => {
         dataAsJson.push(JSON.parse(res));
       });
       commit("storeCurrentHistory", dataAsJson);
-      // for (let r of res.data) {
-      // }
     });
   },
 };

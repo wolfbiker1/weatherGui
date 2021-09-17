@@ -1,114 +1,187 @@
 <template>
   <div>
-    <div id="brightnessPlot"></div>
+    <div class="brightnessPlot"></div>
   </div>
 </template>
 
 <script>
 import * as d3 from "d3";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "BrightnessGraph",
   props: {
     msg: String,
   },
+  computed: {
+    ...mapGetters("pressure", ["getCurrentHistory"]),
+  },
   mounted() {
-    this.drawPlot();
+    this.fetchHistory().then(() => {
+      this.drawPlot();
+    });
+    setInterval(() => {
+      // this.drawPlot();
+    }, 15000);
   },
   data() {
     return {
       mode: 0,
-      data: [
-        { x: 1, y: 1 },
-        { x: 2, y: 2 },
-        { x: 3, y: 3 },
-        { x: 4, y: 4 },
-        { x: 5, y: 5 },
-      ],
-      data2: [
-        { x: 1, y: 1 },
-        { x: 2, y: 2 },
-        { x: 3, y: 3 },
-        { x: 4, y: 4 },
-        { x: 5, y: 5 },
-      ],
     };
   },
   methods: {
-    drawPlot() {
-      // set the dimensions and margins of the graph
-      const margin = { top: 20, right: 20, bottom: 50, left: 70 },
-        width = 500 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
-
-      /*** DO NOT DELETE!!!! ***/
-      // short time period
-      // var x = d3.scaleTime().domain([new Date('1995-12-17T12:24:00'), new Date('1995-12-17T17:24:00')]).range([0, width]);
-
-      // few days
-      this.mode = 1;
-      const x = d3
-        .scaleTime()
-        .domain([
-          new Date("1995-12-13T12:24:00"),
-          new Date("1995-12-17T17:24:00"),
-        ])
-        .range([0, width]);
-
-      const y = d3.scaleLinear().domain([1018, 1030]).range([height, 0]);
-
-      // define the line
-      const valueline = d3
+    ...mapActions("pressure", ["fetchHistory"]),
+    createDataLine(x, y) {
+      return d3
         .line()
         .x(function (d) {
-          return x(d.x);
+          return x(new Date(d.x));
         })
         .y(function (d) {
           return y(d.y);
+        })
+        .curve(d3.curveMonotoneX);
+    },
+    createArea(x, y) {
+      return d3
+        .area()
+        .x(function (d) {
+          return x(new Date(d.x));
+        })
+        .y0(window.height)
+        .y1(function (d) {
+          return y(d.y);
         });
+    },
+    createXAxis(start, end, window) {
+      return d3
+        .scaleTime()
+        .domain([new Date(start), new Date(end)])
+        .range([0, window.width]);
+    },
+    createYAxis(start, end, window) {
+      return d3.scaleLinear().domain([start, end]).range([window.height, 0]);
+    },
+    setUpWindow() {
+      const margin = { top: 20, right: 20, bottom: 50, left: 70 };
+      return {
+        width: 500 - margin.left - margin.right,
+        height: 300 - margin.top - margin.bottom,
+        margin: margin,
+      };
+    },
+    removePlot() {
+      d3.select("#brightnessGraph").remove();
+      // d3.select("#yaxis").remove();
+    },
+    drawPlot() {
+      const dataset = this.getCurrentHistory;
+      this.removePlot();
 
+      // set the dimensions and margins of the graph
+      const window = this.setUpWindow();
+      const start = this.getCurrentHistory[0].x;
+      const end = this.getCurrentHistory[this.getCurrentHistory.length - 1].x;
+
+      /*** DO NOT DELETE!!!! ***/
+      // short time period
+      var x = this.createXAxis(start, end, window);
+
+      const getYs = () => {
+        return dataset.map((e) => e.y);
+      };
+      const y = this.createYAxis(
+        Math.min(...getYs()),
+        Math.max(...getYs()),
+        window
+      );
+
+      const valueline = this.createDataLine(x, y);
+      const area = d3
+        .area()
+        .x(function (d) {
+          return x(new Date(d.x));
+        })
+        .y0(window.height)
+        .y1(function (d) {
+          return y(d.y);
+        });
+      // few days
+      this.mode = 0;
+      /*** DO NOT DELETE!!!! ***/
+      // long time period
+      // const x = d3
+      //   .scaleTime()
+      //   .domain([
+      //     new Date("1995-12-13T12:24:00"),
+      //     new Date("1995-12-13T17:24:00"),
+      //   ])
+      //   .range([0, width]);
+
+      // main
       const svg = d3
-        .select("#brightnessPlot")
+        .select(".brightnessPlot")
         .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("id", "brightnessGraph")
+        .attr("width", window.width + window.margin.left + window.margin.right)
+        .attr(
+          "height",
+          window.height + window.margin.top + window.margin.bottom
+        )
         .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr(
+          "transform",
+          "translate(" + window.margin.left + "," + window.margin.top + ")"
+        );
 
-      const dd = [
-        { x: new Date("1995-12-13T12:24:00"), y: 1024.2 },
-        { x: new Date("1995-12-14T12:51:00"), y: 1028.2 },
-        { x: new Date("1995-12-15T13:25:00"), y: 1027.2 },
-        { x: new Date("1995-12-16T15:24:00"), y: 1021.2 },
-        { x: new Date("1995-12-17T16:54:00"), y: 1018.2 },
-      ];
+      // Add the area
+      svg
+        .append("path")
+        .datum(dataset)
+        .attr("class", "area")
+        .attr("fill", "#fc0808")
+        .attr("fill-opacity", 0.1)
+        .attr("stroke", "none")
+        .attr("d", area);
 
       svg
         .append("path")
-        .data([dd])
-        .style("fill", "none")
+        .data([dataset])
         .attr("class", "line")
-        .style("stroke", "#b77efc")
+        .attr("fill", "none")
+        .attr("stroke-width", 1)
+        .attr("opacity", 1)
+        .style("stroke", "#fc0808")
         .attr("d", valueline);
 
       // Add the x Axis
       svg
         .append("g")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + window.height + ")")
         .call(
           d3
             .axisBottom(x)
+            .ticks(5)
             .tickFormat(
               this.mode === 0 ? d3.timeFormat("%H:%M") : d3.timeFormat("%d/%m")
             )
         );
 
       // Add the y Axis
-      svg.append("g").call(d3.axisLeft(y));
+      svg.append("g").attr("id", "yaxis").call(d3.axisLeft(y));
     },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="css"></style>
+<style scoped lang="css">
+/* .area {
+  fill: rgb(0, 204, 255);
+  stroke-width: 0;
+} */
+.area {
+  fill: url(#temperature-gradient);
+  stroke-width: 05px;
+}
+</style>

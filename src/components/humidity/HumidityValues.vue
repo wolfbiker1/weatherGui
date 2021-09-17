@@ -5,7 +5,7 @@
         <!-- <p class="font-extrabold mt-10 text-5xl">{{ getCurrentPressure }}</p> -->
         <p class="font-extrabold mt-10 text-5xl">1020.24</p>
         <div>
-          <p>hPa</p>
+          <p>%</p>
         </div>
       </div>
       <div>
@@ -16,19 +16,19 @@
       <div class="block text-center mt-4">
         <div class="p-2">
           <div class="inline block">
-            <span class="text-ice-blue"><i> Max </i></span>
+            <span class="text-sharp-green"><i> Max </i></span>
             <span><i> 1023,21 hPa </i></span>
           </div>
         </div>
         <div class="p-2">
           <div class="inline block">
-            <span class="text-ice-blue"><i> Avg </i></span>
+            <span class="text-sharp-green"><i> Avg </i></span>
             <span><i> 1023,21 hPa </i></span>
           </div>
         </div>
         <div class="p-2">
           <div class="inline block">
-            <span class="text-ice-blue"><i> Min </i></span>
+            <span class="text-sharp-green"><i> Min </i></span>
             <span><i> 1023,21 hPa </i></span>
           </div>
         </div>
@@ -36,37 +36,14 @@
     </div>
   </div>
 </template>
-
 <script>
-import { mapActions, mapGetters } from "vuex";
-
 export default {
-  name: "PressureValues",
-  computed: {
-    ...mapGetters("pressure", ["getCurrentPressure"]),
-  },
-  created() {
-    // setInterval(this.fetchCurrentTemp, 1000);
-  },
-  mounted() {
-    setInterval(() => {
-      this.fetchCurrentPressure();
-    }, 5000);
-  },
-  data() {
-    return {
-      currentValue: 0.0,
-    };
-  },
-  methods: {
-    ...mapActions("pressure", ["fetchCurrentPressure"]),
+  name: "HumidityValues",
+  props: {
+    msg: String,
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-.rotate-90 {
-  --transform-rotate: 90deg;
-}
-</style>
+<style scoped lang="scss"></style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="pressurePlot"></div>
+    <div class="humidityPlot"></div>
   </div>
 </template>
 
@@ -9,7 +9,7 @@ import * as d3 from "d3";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "PressureGraph",
+  name: "HumidityGraph",
   props: {
     msg: String,
   },
@@ -71,8 +71,8 @@ export default {
       };
     },
     removePlot() {
-      d3.select("#pressureGraph").remove();
-      d3.select("#yaxis").remove();
+      d3.select("#humidityGraph").remove();
+      // d3.select("#yaxis").remove();
     },
     drawPlot() {
       const dataset = this.getCurrentHistory;
@@ -120,9 +120,9 @@ export default {
 
       // main
       const svg = d3
-        .select(".pressurePlot")
+        .select(".humidityPlot")
         .append("svg")
-        .attr("id", "pressureGraph")
+        .attr("id", "humidityGraph")
         .attr("width", window.width + window.margin.left + window.margin.right)
         .attr(
           "height",
@@ -134,35 +134,12 @@ export default {
           "translate(" + window.margin.left + "," + window.margin.top + ")"
         );
 
-      svg
-        .append("linearGradient")
-        .attr("id", "temperature-gradient")
-        .attr("gradientUnits", "userSpaceOnUse")
-        .attr("x1", 0)
-        .attr("y1", y(1010))
-        .attr("x2", 0)
-        .attr("y2", y(1030))
-        .selectAll("stop")
-        .data([
-          { offset: "0%", color: "steelblue" },
-          { offset: "50%", color: "gray" },
-          { offset: "100%", color: "red" },
-        ])
-        .enter()
-        .append("stop")
-        .attr("offset", function (d) {
-          return d.offset;
-        })
-        .attr("stop-color", function (d) {
-          return d.color;
-        });
-
       // Add the area
       svg
         .append("path")
         .datum(dataset)
         .attr("class", "area")
-        .attr("fill", "rgb(207, 228, 255)")
+        .attr("fill", "#08fc34")
         .attr("fill-opacity", 0.1)
         .attr("stroke", "none")
         .attr("d", area);
@@ -174,7 +151,7 @@ export default {
         .attr("fill", "none")
         .attr("stroke-width", 1)
         .attr("opacity", 1)
-        .style("stroke", "rgb(0, 204, 255)")
+        .style("stroke", "#08fc34")
         .attr("d", valueline);
 
       // Add the x Axis
