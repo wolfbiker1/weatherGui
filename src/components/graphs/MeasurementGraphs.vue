@@ -6,8 +6,9 @@
 
 <script>
 import * as d3 from "d3";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
+import { mapState } from "vuex";
 export default {
   name: "MeasurementGraphs",
   props: {
@@ -15,19 +16,29 @@ export default {
     plotId: String,
     strokeColor: String,
     areaColor: String,
+    apiRoute: String,
   },
-  created () {
+  created() {
+    console.log(this.apiRoute);
+  },
+  computed: mapState({
+    // state (state) {
+    // return state[this.namespace]
+    // },
+    getCurrentHistory(state, getters) {
+      return getters[this.apiRoute + "/getCurrentHistory"];
     },
-  computed: {
-    ...mapGetters("pressure", ["getCurrentHistory"]),
-  },
+  }),
+  // {
+  // ...mapGetters(this.apiRoute, ["getCurrentHistory"]),
+  // },
   mounted() {
-    this.fetchHistory().then(() => {
+    this.fetchHistory(this.apiRoute).then(() => {
       this.drawPlot();
     });
-      console.log(this.field);
+    // console.log(this.field);
     setInterval(() => {
-      // this.drawPlot();
+      this.drawPlot();
     }, 15000);
   },
   data() {
@@ -36,7 +47,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions("pressure", ["fetchHistory"]),
+    ...mapActions({
+      fetchHistory(dispatch, payload) {
+        return dispatch(this.apiRoute + "/fetchHistory", payload);
+      },
+      // "pressure", ["fetchHistory"]
+    }),
     createDataLine(x, y) {
       return d3
         .line()

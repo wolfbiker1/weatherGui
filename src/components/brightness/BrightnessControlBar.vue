@@ -55,7 +55,6 @@
   </div>
 </template>
 
-
 <script>
 export default {
   name: "BrightnessControlBar",

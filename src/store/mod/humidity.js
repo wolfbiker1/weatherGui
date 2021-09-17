@@ -1,25 +1,43 @@
 import axios from "axios";
 
 const state = () => ({
-  currentTemp: 0,
+  currentHumidity: 0,
+  history: [],
 });
 
 const getters = {
-  getCurrentTemp(state) {
-    return state.currentTemp;
+  getCurrentHumidity(state) {
+    return state.currentHumidity;
+  },
+  getCurrentHistory(state) {
+    return state.history;
   },
 };
 
 const mutations = {
-  storeCurrentTemp(state, temp) {
-    state.currentTemp = temp;
+  storeCurrentHumidity(state, humidity) {
+    state.currentHumidity = humidity.value;
+    state.history.push({ x: humidity.time, y: humidity.value });
+  },
+  storeCurrentHistory(state, history) {
+    state.history = history;
+    
   },
 };
 
 const actions = {
-  fetchCurrentTemp({ commit }) {
-    axios.get("/temp").then((res) => {
-      commit("storeCurrentTemp", res.data);
+  fetchCurrentHumidity({ commit }) {
+    axios.get("/humidity").then((res) => {
+      commit("storeCurrentHumidity", res.data);
+    });
+  },
+  async fetchHistory({ commit }, field) {
+    return axios.get(`/hist/for/${field}`).then((res) => {
+      const dataAsJson = [];
+      res.data.forEach((res) => {
+        dataAsJson.push(JSON.parse(res));
+      });
+      commit("storeCurrentHistory", dataAsJson);
     });
   },
 };

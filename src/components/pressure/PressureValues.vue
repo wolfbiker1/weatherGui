@@ -2,8 +2,8 @@
   <div>
     <div>
       <div class="flex items-center justify-center">
-        <!-- <p class="font-extrabold mt-10 text-5xl">{{ getCurrentPressure }}</p> -->
-        <p class="font-extrabold mt-10 text-5xl">1020.24</p>
+        <p class="font-extrabold mt-10 text-5xl">{{ getCurrentPressure }}</p>
+        <!-- <p class="font-extrabold mt-10 text-5xl">1020.24</p> -->
         <div>
           <p>hPa</p>
         </div>

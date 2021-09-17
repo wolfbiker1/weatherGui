@@ -2,8 +2,8 @@
   <div>
     <div>
       <div class="flex items-center justify-center">
-        <!-- <p class="font-extrabold mt-10 text-5xl">{{ getCurrentPressure }}</p> -->
-        <p class="font-extrabold mt-10 text-5xl">1020.24</p>
+        <p class="font-extrabold mt-10 text-5xl">{{ getCurrentBrightness }}</p>
+        <!-- <p class="font-extrabold mt-10 text-5xl">1020.24</p> -->
         <div>
           <p>lux</p>
         </div>
@@ -37,11 +37,23 @@
   </div>
 </template>
 <script>
+import {mapGetters, mapActions} from "vuex";
 export default {
   name: "BrightnessValues",
+  computed: {
+    ...mapGetters("brightness", ["getCurrentBrightness"]),
+  },
   props: {
     msg: String,
   },
+  mounted() {
+    setInterval(() => {
+      this.fetchCurrentBrightness();
+    }, 5000);
+  },
+  methods: {
+    ...mapActions("brightness", ["fetchCurrentBrightness"]),
+  }
 };
 </script>
 

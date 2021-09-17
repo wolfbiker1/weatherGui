@@ -30,8 +30,8 @@ const actions = {
       commit("storeCurrentPressure", res.data);
     });
   },
-  async fetchHistory({ commit }) {
-    return axios.get("/hist/for/humidity").then((res) => {
+  async fetchHistory({ commit }, field) {
+    return axios.get(`/hist/for/${field}`).then((res) => {
       const dataAsJson = [];
       res.data.forEach((res) => {
         dataAsJson.push(JSON.parse(res));

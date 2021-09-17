@@ -2,8 +2,8 @@
   <div>
     <div>
       <div class="flex items-center justify-center">
-        <!-- <p class="font-extrabold mt-10 text-5xl">{{ getCurrentPressure }}</p> -->
-        <p class="font-extrabold mt-10 text-5xl">1020.24</p>
+        <p class="font-extrabold mt-10 text-5xl">{{getCurrentHumidity}}</p>
+        <!-- <p class="font-extrabold mt-10 text-5xl">1020.24</p> -->
         <div>
           <p>%</p>
         </div>
@@ -36,12 +36,26 @@
     </div>
   </div>
 </template>
+
 <script>
+import {mapActions, mapGetters} from "vuex";
+
 export default {
   name: "HumidityValues",
+  computed: {
+    ...mapGetters("humidity", ["getCurrentHumidity"]),
+  },
   props: {
     msg: String,
   },
+  mounted() {
+    setInterval(() => {
+      this.fetchCurrentHumidity();
+    }, 5000);
+  },
+  methods: {
+    ...mapActions("humidity", ["fetchCurrentHumidity"]),
+  }
 };
 </script>
 

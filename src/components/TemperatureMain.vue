@@ -9,7 +9,13 @@
       </div>
 
       <article class="p-2 m-2">
-        <MeasurementGraphs :field="'tempPlot'" :strokeColor="'#fcd408'" :areaColor="'#cfe4ff'" :plotId="'tempGraph'"/>
+        <MeasurementGraphs
+          :apiRoute="'temp'"
+          :field="'tempPlot'"
+          :strokeColor="'#fcd408'"
+          :areaColor="'#cfe4ff'"
+          :plotId="'tempGraph'"
+        />
       </article>
     </section>
 
@@ -23,7 +29,7 @@
 import TempValues from "./temperature/TempValues.vue";
 // import TempGraph from "./temperature/TempGraph.vue";
 import TempControlBar from "./temperature/TempControlBar.vue";
-import MeasurementGraphs from './graphs/MeasurementGraphs.vue';
+import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
 export default {
   name: "TemperatureMain",
   props: {
@@ -33,7 +39,7 @@ export default {
     TempValues,
     // TempGraph,
     TempControlBar,
-    MeasurementGraphs
+    MeasurementGraphs,
   },
   methods: {},
 };
