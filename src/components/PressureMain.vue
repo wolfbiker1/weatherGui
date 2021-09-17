@@ -9,7 +9,8 @@
       </div>
 
       <article class="p-2 m-2">
-        <PressureGraph />
+        <!-- <PressureGraph /> -->       
+        <MeasurementGraphs :field="'pressurePlot'" :strokeColor="'#00ccff'" :areaColor="'#cfe4ff'" :plotId="'pressureGraph'"/>
       </article>
     </section>
 
@@ -21,9 +22,9 @@
 
 <script>
 import PressureValues from "./pressure/PressureValues.vue";
-import PressureGraph from "./pressure/PressureGraph.vue";
+// import PressureGraph from "./pressure/PressureGraph.vue";
 import PressureControlBar from "./pressure/PressureControlBar.vue";
-
+import MeasurementGraphs from './graphs/MeasurementGraphs.vue';
 export default {
   name: "PressureMain",
   props: {
@@ -31,8 +32,9 @@ export default {
   },
   components: {
     PressureValues,
-    PressureGraph,
+    // PressureGraph,
     PressureControlBar,
+    MeasurementGraphs,
   },
   methods: {},
 };

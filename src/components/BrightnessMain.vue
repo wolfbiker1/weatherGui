@@ -9,7 +9,8 @@
       </div>
 
       <article class="p-2 m-2">
-        <BrightnessGraph />
+        <!-- <BrightnessGraph /> -->
+        <MeasurementGraphs :field="'brightnessPlot'" :strokeColor="'#fc0808'" :areaColor="'#cfe4ff'" :plotId="'brightnessGraph'"/>
       </article>
     </section>
 
@@ -21,9 +22,9 @@
 
 <script>
 import BrightnessValues from "./brightness/BrightnessValues.vue";
-import BrightnessGraph from "./brightness/BrightnessGraph.vue";
+// import BrightnessGraph from "./brightness/BrightnessGraph.vue";
 import BrightnessControlBar from "./brightness/BrightnessControlBar.vue";
-
+import MeasurementGraphs from './graphs/MeasurementGraphs.vue';
 export default {
   name: "BrightnessMain",
   props: {
@@ -31,7 +32,8 @@ export default {
   },
   components: {
     BrightnessValues,
-    BrightnessGraph,
+    // BrightnessGraph,
+    MeasurementGraphs,
     BrightnessControlBar,
   },
 };

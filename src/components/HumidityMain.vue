@@ -9,7 +9,8 @@
       </div>
 
       <article class="p-2 m-2">
-        <HumidityGraph />
+        <!-- <HumidityGraph /> -->
+        <MeasurementGraphs :field="'humidityPlot'" :strokeColor="'#08fc34'" :areaColor="'#cfe4ff'" :plotId="'humidityGraph'"/>
       </article>
     </section>
 
@@ -21,9 +22,9 @@
 
 <script>
 import HumidityValues from "./humidity/HumidityValues.vue";
-import HumidityGraph from "./humidity/HumidityGraph.vue";
+// import HumidityGraph from "./humidity/HumidityGraph.vue";
 import HumidityControlBar from "./humidity/HumidityControlBar.vue";
-
+import MeasurementGraphs from './graphs/MeasurementGraphs.vue';
 export default {
   name: "HumidityMain",
   props: {
@@ -31,8 +32,9 @@ export default {
   },
   components: {
     HumidityValues,
-    HumidityGraph,
+    // HumidityGraph,
     HumidityControlBar,
+    MeasurementGraphs
   },
   methods: {},
 };
