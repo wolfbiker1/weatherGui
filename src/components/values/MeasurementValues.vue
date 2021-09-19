@@ -16,7 +16,7 @@
       <div class="block text-center mt-4">
         <div class="p-2">
           <div class="inline block">
-            <span class="text-sharp-green"><i> Max </i></span>
+            <span :class='color'><i> Max </i></span>
             <span
               ><i> 1023,21 {{ unit }} </i></span
             >
@@ -24,7 +24,7 @@
         </div>
         <div class="p-2">
           <div class="inline block">
-            <span class="text-sharp-green"><i> Avg </i></span>
+            <span  :class='color'><i> Avg </i></span>
             <span
               ><i> 1023,21 {{ unit }} </i></span
             >
@@ -32,7 +32,7 @@
         </div>
         <div class="p-2">
           <div class="inline block">
-            <span class="text-sharp-green"><i> Min </i></span>
+            <span  :class='color'><i> Min </i></span>
             <span
               ><i> 1023,21 {{ unit }} </i></span
             >
@@ -51,6 +51,7 @@ export default {
   props: {
     field: String,
     unit: String,
+    color: String
   },
   computed: {
     ...mapGetters("measurements", ["getMeasurement"]),

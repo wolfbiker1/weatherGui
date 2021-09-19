@@ -5,7 +5,7 @@
     </header>
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
-        <HumidityValues />
+        <MeasurementValues :color="'text-sharp-green'" :field="'humidity'" :unit="'%'" />
       </div>
 
       <article class="p-2 m-2">
@@ -27,18 +27,18 @@
 </template>
 
 <script>
-import HumidityValues from "./humidity/HumidityValues.vue";
 import HumidityControlBar from "./humidity/HumidityControlBar.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
+import MeasurementValues from "./values/MeasurementValues.vue";
 export default {
   name: "HumidityMain",
   props: {
     msg: String,
   },
   components: {
-    HumidityValues,
     HumidityControlBar,
     MeasurementGraphs,
+    MeasurementValues
   },
   methods: {},
 };

@@ -6,7 +6,7 @@
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
         <!-- <BrightnessValues /> -->
-        <MeasurementValues :field="'brightness'" :unit="'lux'" />
+        <MeasurementValues :color="'text-sharp-red'" :field="'brightness'" :unit="'lux'" />
       </div>
 
       <article class="p-2 m-2">

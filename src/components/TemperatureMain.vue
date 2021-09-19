@@ -5,7 +5,7 @@
     </header>
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
-        <TempValues />
+        <MeasurementValues :color="'text-sharp-yellow'" :field="'temp'" :unit="'°C'" />
       </div>
 
       <article class="p-2 m-2">
@@ -26,19 +26,18 @@
 </template>
 
 <script>
-import TempValues from "./temperature/TempValues.vue";
 import TempControlBar from "./temperature/TempControlBar.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
+import MeasurementValues from "./values/MeasurementValues.vue";
 export default {
   name: "TemperatureMain",
   props: {
     msg: String,
   },
   components: {
-    TempValues,
-    // TempGraph,
     TempControlBar,
     MeasurementGraphs,
+    MeasurementValues
   },
   methods: {},
 };

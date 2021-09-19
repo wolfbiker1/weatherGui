@@ -5,7 +5,7 @@
     </header>
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
-        <PressureValues />
+        <MeasurementValues :color="'text-ice-blue'" :field="'pressure'" :unit="'hPa'" />
       </div>
 
       <article class="p-2 m-2">
@@ -27,19 +27,18 @@
 </template>
 
 <script>
-import PressureValues from "./pressure/PressureValues.vue";
 import PressureControlBar from "./pressure/PressureControlBar.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
+import MeasurementValues from "./values/MeasurementValues.vue";
 export default {
   name: "PressureMain",
   props: {
     msg: String,
   },
   components: {
-    PressureValues,
-    // PressureGraph,
     PressureControlBar,
     MeasurementGraphs,
+    MeasurementValues
   },
   methods: {},
 };
