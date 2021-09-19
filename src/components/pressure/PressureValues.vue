@@ -16,22 +16,41 @@
       <div class="block text-center mt-4">
         <div class="p-2">
           <div class="inline block">
-            <span class="text-ice-blue" @click="foo"><i> Max </i></span>
-            <span
-              ><i> {{ getPeakData("pressure").max.toFixed(2) }} hPa </i></span
-            >
+            <span class="text-ice-blue"><i> Max </i></span>
+            <template v-if="!isEmpty">
+              <span
+                ><i> {{ getPeakData("pressure").max.toFixed(2) }} hPa </i></span
+              >
+            </template>
+            <template v-else>
+              <span><i> ??? </i></span>
+            </template>
           </div>
         </div>
         <div class="p-2">
           <div class="inline block">
             <span class="text-ice-blue"><i> Avg </i></span>
-            <span><i> 1023,21 hPa </i></span>
+            <template v-if="!isEmpty">
+              <span
+                ><i> {{ getPeakData("pressure").avg.toFixed(2) }} hPa </i></span
+              >
+            </template>
+            <template v-else>
+              <span><i> ??? </i></span>
+            </template>
           </div>
         </div>
         <div class="p-2">
           <div class="inline block">
             <span class="text-ice-blue"><i> Min </i></span>
-            <span><i> 1023,21 hPa </i></span>
+            <template v-if="!isEmpty">
+              <span
+                ><i> {{ getPeakData("pressure").min.toFixed(2) }} hPa </i></span
+              >
+            </template>
+            <template v-else>
+              <span><i> ??? </i></span>
+            </template>
           </div>
         </div>
       </div>
@@ -46,15 +65,15 @@ export default {
   name: "PressureValues",
   computed: {
     ...mapGetters("pressure", ["getCurrentPressure"]),
-    ...mapGetters("peaks", ["getPeakData"]),
+    ...mapGetters("peaks", ["getPeakData", "isEmpty"]),
   },
   created() {
     // setInterval(this.fetchCurrentTemp, 1000);
   },
   mounted() {
     setInterval(() => {
-      this.fetchPeakData();
       this.fetchCurrentPressure();
+      this.fetchPeakData();
     }, 5000);
   },
   data() {
@@ -63,9 +82,6 @@ export default {
     };
   },
   methods: {
-    foo() {
-      console.log(this.getPeakData());
-    },
     ...mapActions("pressure", ["fetchCurrentPressure"]),
     ...mapActions("peaks", ["fetchPeakData"]),
   },

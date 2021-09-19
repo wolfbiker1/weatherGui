@@ -1,19 +1,46 @@
 import axios from "axios";
 
 const state = () => ({
-  peakData: {},
+  peakData: {
+    //   "pressure": {
+    //       "max": 0.00,
+    //       "avg": 0.00,
+    //       "min": 0.00,
+    //   }
+  },
+  isEmpty: true,
 });
 
 const getters = {
   getPeakData: (state) => (field) => {
-    console.log("go");
+    if (!state.peakData[field]) {
+      const foo = {
+        field: {
+          max: 0.0,
+          avg: 0.0,
+          min: 0.0,
+        },
+      };
+      console.log(foo);
+      return {
+        field: {
+          max: 0.0,
+          avg: 0.0,
+          min: 0.0,
+        },
+      };
+    }
     return state.peakData[field];
+  },
+  isEmpty(state) {
+    state.isEmpty;
   },
 };
 
 const mutations = {
   storePeakData(state, peakData) {
     state.peakData = peakData;
+    state.isEmpty = false;
   },
 };
 

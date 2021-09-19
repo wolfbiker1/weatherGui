@@ -18,9 +18,6 @@ export default {
     areaColor: String,
     apiRoute: String,
   },
-  created() {
-    console.log(this.apiRoute);
-  },
   computed: mapState({
     // state (state) {
     // return state[this.namespace]
