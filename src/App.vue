@@ -5,6 +5,30 @@
   </div>
 </template>
 
+<script>
+import { mapActions } from "vuex";
+
+export default {
+  created() {
+    console.log("bar");
+    setInterval(() => {
+      this.fetchTemp();
+      this.fetchPressure();
+      this.fetchHumidity();
+      this.fetchBrightness();
+    }, 5000);
+  },
+  methods: {
+    ...mapActions("measurements", [
+      "fetchTemp",
+      "fetchPressure",
+      "fetchHumidity",
+      "fetchBrightness",
+    ]),
+  },
+};
+</script>
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

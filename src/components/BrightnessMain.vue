@@ -5,7 +5,8 @@
     </header>
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
-        <BrightnessValues />
+        <!-- <BrightnessValues /> -->
+        <MeasurementValues :field="'brightness'" :unit="'lux'" />
       </div>
 
       <article class="p-2 m-2">
@@ -27,8 +28,8 @@
 </template>
 
 <script>
-import BrightnessValues from "./brightness/BrightnessValues.vue";
-// import BrightnessGraph from "./brightness/BrightnessGraph.vue";
+// import BrightnessValues from "./brightness/BrightnessValues.vue";
+import MeasurementValues from "./values/MeasurementValues.vue";
 import BrightnessControlBar from "./brightness/BrightnessControlBar.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
 export default {
@@ -37,9 +38,10 @@ export default {
     msg: String,
   },
   components: {
-    BrightnessValues,
+    // BrightnessValues,
     // BrightnessGraph,
     MeasurementGraphs,
+    MeasurementValues,
     BrightnessControlBar,
   },
 };

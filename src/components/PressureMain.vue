@@ -28,7 +28,6 @@
 
 <script>
 import PressureValues from "./pressure/PressureValues.vue";
-// import PressureGraph from "./pressure/PressureGraph.vue";
 import PressureControlBar from "./pressure/PressureControlBar.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
 export default {

@@ -1,14 +1,14 @@
 <template>
   <div>
+    <button @click="drawPlot">adf</button>
     <div :class="field"></div>
   </div>
 </template>
 
 <script>
 import * as d3 from "d3";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
-import { mapState } from "vuex";
 export default {
   name: "MeasurementGraphs",
   props: {
@@ -18,22 +18,15 @@ export default {
     areaColor: String,
     apiRoute: String,
   },
-  computed: mapState({
-    // state (state) {
-    // return state[this.namespace]
-    // },
-    getCurrentHistory(state, getters) {
-      return getters[this.apiRoute + "/getCurrentHistory"];
+  computed: {
+    ...mapGetters("history", ["getHistory"]),
+    getCurrentHistory() {
+      return this.getHistory(this.apiRoute);
     },
-  }),
-  // {
-  // ...mapGetters(this.apiRoute, ["getCurrentHistory"]),
-  // },
+  },
   mounted() {
-    this.fetchHistory(this.apiRoute).then(() => {
-      this.drawPlot();
-    });
-    // console.log(this.field);
+    this.fetchHist();
+
     setInterval(() => {
       this.drawPlot();
     }, 15000);
@@ -44,12 +37,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions({
-      fetchHistory(dispatch, payload) {
-        return dispatch(this.apiRoute + "/fetchHistory", payload);
-      },
-      // "pressure", ["fetchHistory"]
-    }),
+    ...mapActions("history", ["fetchHistory"]),
+    fetchHist() {
+      this.fetchHistory(this.apiRoute).then(() => {
+        this.drawPlot();
+      });
+    },
     createDataLine(x, y) {
       return d3
         .line()
@@ -95,6 +88,7 @@ export default {
     },
     drawPlot() {
       const dataset = this.getCurrentHistory;
+      // console.log(dataset);
       this.removePlot();
 
       // set the dimensions and margins of the graph

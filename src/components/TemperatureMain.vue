@@ -27,7 +27,6 @@
 
 <script>
 import TempValues from "./temperature/TempValues.vue";
-// import TempGraph from "./temperature/TempGraph.vue";
 import TempControlBar from "./temperature/TempControlBar.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
 export default {

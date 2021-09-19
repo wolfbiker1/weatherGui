@@ -28,7 +28,6 @@
 
 <script>
 import HumidityValues from "./humidity/HumidityValues.vue";
-// import HumidityGraph from "./humidity/HumidityGraph.vue";
 import HumidityControlBar from "./humidity/HumidityControlBar.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
 export default {
@@ -38,7 +37,6 @@ export default {
   },
   components: {
     HumidityValues,
-    // HumidityGraph,
     HumidityControlBar,
     MeasurementGraphs,
   },
