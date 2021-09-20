@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <div class="flex items-center justify-center h-screen">
+  <div class="home bg-dark-gray">
+    <div class="flex items-center justify-center">
       <div class="container md:container md:mx-auto">
         <div class="grid grid-cols-2 gap-4">
           <div class="border-4 border-gray-600">

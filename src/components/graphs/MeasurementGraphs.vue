@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button @click="drawPlot">adf</button>
     <div :class="field"></div>
   </div>
 </template>
@@ -171,6 +170,8 @@ export default {
       svg
         .append("g")
         .attr("transform", "translate(0," + window.height + ")")
+        .style("stroke", "white")
+        .attr("class", "axisWhite")
         .call(
           d3
             .axisBottom(x)
@@ -181,20 +182,32 @@ export default {
         );
 
       // Add the y Axis
-      svg.append("g").attr("id", "yaxis").call(d3.axisLeft(y));
+      svg
+        .append("g")
+        // .attr("class", "axisWhite")
+        .style("stroke", "white")
+        .attr("id", "yaxis")
+        .call(d3.axisLeft(y));
     },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="css">
+<style scoped>
 /* .area {
   fill: rgb(0, 204, 255);
   stroke-width: 0;
 } */
-.area {
-  fill: url(#temperature-gradient);
-  stroke-width: 05px;
+.axisWhite line {
+  stroke: red;
 }
+
+.axisWhite path {
+  stroke: red;
+}
+.axisWhite text {
+  fill: red;
+}
+
 </style>

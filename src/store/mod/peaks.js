@@ -2,26 +2,37 @@ import axios from "axios";
 
 const state = () => ({
   peakData: {
-    //   "pressure": {
-    //       "max": 0.00,
-    //       "avg": 0.00,
-    //       "min": 0.00,
-    //   }
+    pressure: {
+      max: 0.0,
+      avg: 0.0,
+      min: 0.0,
+    },
+    outdoor_temp: {
+      max: 0.0,
+      avg: 0.0,
+      min: 0.0,
+    },
+    humidity: {
+      max: 0.0,
+      avg: 0.0,
+      min: 0.0,
+    },
+    brightness: {
+      max: 0.0,
+      avg: 0.0,
+      min: 0.0,
+    },
   },
   isEmpty: true,
 });
 
 const getters = {
   getPeakData: (state) => (field) => {
+    let foo = field;
+    if (field === "temp") {
+      return state.peakData["outdoor_temp"];
+    }
     if (!state.peakData[field]) {
-      const foo = {
-        field: {
-          max: 0.0,
-          avg: 0.0,
-          min: 0.0,
-        },
-      };
-      console.log(foo);
       return {
         field: {
           max: 0.0,
@@ -30,7 +41,7 @@ const getters = {
         },
       };
     }
-    return state.peakData[field];
+    return state.peakData[foo];
   },
   isEmpty(state) {
     state.isEmpty;

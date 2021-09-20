@@ -1,11 +1,15 @@
 <template>
   <div>
     <header class="text-center m-2">
-      <h1 class="text-3xl">Air Pressure</h1>
+      <h1 class="text-3xl text-white">Air Pressure</h1>
     </header>
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
-        <MeasurementValues :color="'text-ice-blue'" :field="'pressure'" :unit="'hPa'" />
+        <MeasurementValues
+          :color="'text-ice-blue'"
+          :field="'pressure'"
+          :unit="'hPa'"
+        />
       </div>
 
       <article class="p-2 m-2">
@@ -38,7 +42,7 @@ export default {
   components: {
     PressureControlBar,
     MeasurementGraphs,
-    MeasurementValues
+    MeasurementValues,
   },
   methods: {},
 };

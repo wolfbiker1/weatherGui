@@ -1,11 +1,15 @@
 <template>
   <div>
     <header class="text-center m-2">
-      <h1 class="text-3xl">Outdoor Temperature</h1>
+      <h1 class="text-3xl text-white">Outdoor Temperature</h1>
     </header>
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
-        <MeasurementValues :color="'text-sharp-yellow'" :field="'temp'" :unit="'°C'" />
+        <MeasurementValues
+          :color="'text-sharp-yellow'"
+          :field="'temp'"
+          :unit="'°C'"
+        />
       </div>
 
       <article class="p-2 m-2">
@@ -37,7 +41,7 @@ export default {
   components: {
     TempControlBar,
     MeasurementGraphs,
-    MeasurementValues
+    MeasurementValues,
   },
   methods: {},
 };

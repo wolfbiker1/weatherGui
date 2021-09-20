@@ -16,8 +16,10 @@ const getters = {
 
 const mutations = {
   addHistoryEntry(state, payload) {
-    console.log(payload);
-    state.history[payload.field].push({ x: payload.value.time, y: payload.value.value });
+    state.history[payload.field].push({
+      x: payload.value.time,
+      y: payload.value.value,
+    });
   },
   storeCurrentHistory(state, payload) {
     state.history[payload.field] = payload.data;
