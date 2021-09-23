@@ -175,7 +175,7 @@ export default {
         .call(
           d3
             .axisBottom(x)
-            .ticks(5)
+            .ticks(8)
             .tickFormat(
               this.mode === 0 ? d3.timeFormat("%H:%M") : d3.timeFormat("%d/%m")
             )
@@ -209,5 +209,4 @@ export default {
 .axisWhite text {
   fill: red;
 }
-
 </style>

@@ -27,6 +27,7 @@
     <footer class="text-center m-2">
       <PressureControlBar />
     </footer>
+    <button>mock !</button>
   </div>
 </template>
 
