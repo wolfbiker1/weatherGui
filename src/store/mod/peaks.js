@@ -7,7 +7,7 @@ const state = () => ({
       avg: 0.0,
       min: 0.0,
     },
-    outdoor_temp: {
+    temp: {
       max: 0.0,
       avg: 0.0,
       min: 0.0,
@@ -28,10 +28,6 @@ const state = () => ({
 
 const getters = {
   getPeakData: (state) => (field) => {
-    let foo = field;
-    if (field === "temp") {
-      return state.peakData["outdoor_temp"];
-    }
     if (!state.peakData[field]) {
       return {
         field: {
@@ -41,7 +37,7 @@ const getters = {
         },
       };
     }
-    return state.peakData[foo];
+    return state.peakData[field];
   },
   isEmpty(state) {
     state.isEmpty;

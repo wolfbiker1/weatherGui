@@ -27,7 +27,6 @@
     <footer class="text-center m-2">
       <ControlBar :color="'border-ice-blue'" :field="'pressure'" />
     </footer>
-    <button>mock !</button>
   </div>
 </template>
 

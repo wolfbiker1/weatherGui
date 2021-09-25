@@ -53,6 +53,9 @@ const getters = {
   getHistory: (state) => (field) => {
     return state.history[field];
   },
+  getBoundary: (state) => (field) => {
+    return state.timeRange[field];
+  },
 };
 
 const mutations = {
@@ -77,18 +80,18 @@ const mutations = {
 };
 
 const actions = {
+  fetchAvailableDates({ commit }, field) {
+    axios.get(`/available_dates/for/${field}`).then((res) => {
+      commit("setLeftBorder", { field: field, valueLeft: res.data[0] });
+    });
+  },
   async fetchHistory({ commit, state }, field) {
     // defines right edge of graph, 0 means now
     const borderRight = dateTimeOffset(state.timeRange[field].right).split(" ");
 
     // how many hours show from the past
     const borderLeft = dateTimeOffset(state.timeRange[field].left).split(" ");
-    const mapper = {
-      temp: "outdoor_temp",
-      pressure: "pressure",
-      humidity: "humidity",
-      brightness: "brightness",
-    };
+
     // return axios.get(`/hist/for/${mapper[field]}`).then((res) => {
     //   const dataAsJson = [];
     //   res.data.forEach((res) => {
@@ -98,11 +101,10 @@ const actions = {
     // });
     return axios
       .get(
-        `/hist_range/${mapper[field]}/${borderLeft[0]}/${borderLeft[1]}/${borderRight[0]}/${borderRight[1]}`
+        `/hist_range/${field}/${borderLeft[0]}/${borderLeft[1]}/${borderRight[0]}/${borderRight[1]}`
       )
       .then((res) => {
         const dataAsJson = [];
-        console.log(res);
         res.data.forEach((res) => {
           dataAsJson.push(JSON.parse(res));
         });
