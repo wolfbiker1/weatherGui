@@ -48,13 +48,12 @@ const mutations = {
     state.history[payload.field] = payload.data;
 
     // JUST FOR DEBUG
-    state.history[payload.field].reverse()
+    state.history[payload.field].reverse();
   },
 };
 
 const actions = {
   async fetchHistory({ commit }, field) {
-
     // defines right edge of graph, 0 means now
     const borderRight = dateTimeOffset(3).split(" ");
 
