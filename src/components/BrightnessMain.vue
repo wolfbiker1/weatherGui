@@ -24,15 +24,15 @@
     </section>
 
     <footer class="text-center p-2">
-      <BrightnessControlBar />
+      <ControlBar :color="'border-sharp-red'" :field="'brightness'" />
     </footer>
   </div>
 </template>
 
 <script>
 import MeasurementValues from "./values/MeasurementValues.vue";
-import BrightnessControlBar from "./brightness/BrightnessControlBar.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
+import ControlBar from "./control/ControlBar.vue";
 export default {
   name: "BrightnessMain",
   props: {
@@ -41,7 +41,7 @@ export default {
   components: {
     MeasurementGraphs,
     MeasurementValues,
-    BrightnessControlBar,
+    ControlBar,
   },
 };
 </script>

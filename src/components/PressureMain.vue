@@ -25,25 +25,25 @@
     </section>
 
     <footer class="text-center m-2">
-      <PressureControlBar />
+      <ControlBar :color="'border-ice-blue'" :field="'pressure'" />
     </footer>
     <button>mock !</button>
   </div>
 </template>
 
 <script>
-import PressureControlBar from "./pressure/PressureControlBar.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
 import MeasurementValues from "./values/MeasurementValues.vue";
+import ControlBar from "./control/ControlBar.vue";
 export default {
   name: "PressureMain",
   props: {
     msg: String,
   },
   components: {
-    PressureControlBar,
     MeasurementGraphs,
     MeasurementValues,
+    ControlBar,
   },
   methods: {},
 };

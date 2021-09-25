@@ -24,24 +24,24 @@
     </section>
 
     <footer class="text-center p-2">
-      <TempControlBar />
+      <ControlBar :color="'border-sharp-yellow'" :field="'temperature'" />
     </footer>
   </div>
 </template>
 
 <script>
-import TempControlBar from "./temperature/TempControlBar.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
 import MeasurementValues from "./values/MeasurementValues.vue";
+import ControlBar from "./control/ControlBar.vue";
 export default {
   name: "TemperatureMain",
   props: {
     msg: String,
   },
   components: {
-    TempControlBar,
     MeasurementGraphs,
     MeasurementValues,
+    ControlBar,
   },
   methods: {},
 };

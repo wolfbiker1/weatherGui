@@ -29,6 +29,24 @@ const state = () => ({
     humidity: [],
     brightness: [],
   },
+  timeRange: {
+    temp: {
+      left: 8,
+      right: 0,
+    },
+    pressure: {
+      left: 1,
+      right: 0,
+    },
+    humidity: {
+      left: 2,
+      right: 0,
+    },
+    brightness: {
+      left: 4,
+      right: 0,
+    },
+  },
 });
 
 const getters = {
@@ -38,6 +56,12 @@ const getters = {
 };
 
 const mutations = {
+  setLeftBorder(state, payload) {
+    state.timeRange[payload.field] = payload.valueLeft;
+  },
+  setRightBorder(state, payload) {
+    state.timeRange[payload.field] = payload.valueRight;
+  },
   addHistoryEntry(state, payload) {
     state.history[payload.field].push({
       x: payload.value.time,
@@ -53,12 +77,12 @@ const mutations = {
 };
 
 const actions = {
-  async fetchHistory({ commit }, field) {
+  async fetchHistory({ commit, state }, field) {
     // defines right edge of graph, 0 means now
-    const borderRight = dateTimeOffset(3).split(" ");
+    const borderRight = dateTimeOffset(state.timeRange[field].right).split(" ");
 
     // how many hours show from the past
-    const borderLeft = dateTimeOffset(8).split(" ");
+    const borderLeft = dateTimeOffset(state.timeRange[field].left).split(" ");
     const mapper = {
       temp: "outdoor_temp",
       pressure: "pressure",

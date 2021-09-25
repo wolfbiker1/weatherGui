@@ -25,24 +25,24 @@
     </section>
 
     <footer class="text-center p-2">
-      <HumidityControlBar />
+      <ControlBar :color="'border-sharp-green'" :field="'humidity'" />
     </footer>
   </div>
 </template>
 
 <script>
-import HumidityControlBar from "./humidity/HumidityControlBar.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
 import MeasurementValues from "./values/MeasurementValues.vue";
+import ControlBar from "./control/ControlBar.vue";
 export default {
   name: "HumidityMain",
   props: {
     msg: String,
   },
   components: {
-    HumidityControlBar,
     MeasurementGraphs,
     MeasurementValues,
+    ControlBar,
   },
   methods: {},
 };
