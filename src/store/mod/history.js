@@ -29,6 +29,12 @@ const state = () => ({
     humidity: [],
     brightness: [],
   },
+  dates: {
+    temp: [],
+    pressure: [],
+    humidity: [],
+    brightness: [],
+  },
   timeRange: {
     temp: {
       left: {
@@ -77,12 +83,18 @@ const getters = {
   getHistory: (state) => (field) => {
     return state.history[field];
   },
+  getAvailableDates: (state) => (field) => {
+    return JSON.parse(state.dates[field]);
+  },
   getBoundary: (state) => (field) => {
     return state.timeRange[field];
   },
 };
 
 const mutations = {
+  setBorders(state, payload) {
+    Object.assign(state.dates, payload);
+  },
   setLeftBorder(state, payload) {
     state.timeRange[payload.field] = payload.valueLeft;
   },
@@ -104,10 +116,9 @@ const mutations = {
 };
 
 const actions = {
-  fetchAvailableDates({ commit }, field) {
-    axios.get(`/available_dates/for/${field}`).then((res) => {
-      commit("setLeftBorder", { field: field, valueLeft: res.data[0].date });
-      commit("setRightBorder", { field: field, valueRight: res.data[0].date });
+  fetchAvailableDates({ commit }) {
+    axios.get(`/available_dates/`).then((res) => {
+      commit("setBorders", JSON.parse(res.data));
     });
   },
   async fetchHistory({ commit, state }, field) {

@@ -33,6 +33,8 @@ import PressureMain from "@/components/PressureMain.vue"; // @ is an alias to /s
 import BrightnessMain from "@/components/BrightnessMain.vue"; // @ is an alias to /src
 import HumidityMain from "@/components/HumidityMain.vue"; // @ is an alias to /src
 
+import { mapActions } from "vuex";
+
 export default {
   name: "Frontpage",
   components: {
@@ -40,6 +42,13 @@ export default {
     PressureMain,
     BrightnessMain,
     HumidityMain,
+  },
+  mounted() {
+    this.fetchAvailableDates();
+  },
+  computed: {},
+  methods: {
+    ...mapActions("history", ["fetchAvailableDates"]),
   },
 };
 </script>

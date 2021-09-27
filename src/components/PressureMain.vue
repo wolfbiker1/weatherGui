@@ -25,7 +25,11 @@
     </section>
 
     <footer class="text-center m-2">
-      <ControlBar :color="'border-ice-blue'" :field="'pressure'" />
+      <ControlBar
+        :hoverColor="'hover:bg-ice-blue'"
+        :borderColor="'border-ice-blue'"
+        :field="'pressure'"
+      />
     </footer>
   </div>
 </template>

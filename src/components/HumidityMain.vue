@@ -25,7 +25,11 @@
     </section>
 
     <footer class="text-center p-2">
-      <ControlBar :color="'border-sharp-green'" :field="'humidity'" />
+      <ControlBar
+        :hoverColor="'hover:bg-sharp-green'"
+        :borderColor="'border-sharp-green'"
+        :field="'humidity'"
+      />
     </footer>
   </div>
 </template>

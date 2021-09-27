@@ -24,7 +24,11 @@
     </section>
 
     <footer class="text-center p-2">
-      <ControlBar :color="'border-sharp-yellow'" :field="'temp'" />
+      <ControlBar
+        :hoverColor="'hover:bg-sharp-yellow'"
+        :borderColor="'border-sharp-yellow'"
+        :field="'temp'"
+      />
     </footer>
   </div>
 </template>
