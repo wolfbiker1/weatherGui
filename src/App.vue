@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   created() {
-    console.log("bar");
+    this.setupCurrentDate();
     setInterval(() => {
       this.fetchTemp();
       this.fetchPressure();
@@ -19,6 +19,7 @@ export default {
     }, 5000);
   },
   methods: {
+    ...mapMutations("history", ["setupCurrentDate"]),
     ...mapActions("measurements", [
       "fetchTemp",
       "fetchPressure",

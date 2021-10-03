@@ -13,7 +13,6 @@
       trend
     </button>
 
-
     <div class="dropdown inline-block relative">
       <button
         :class="borderColor"
