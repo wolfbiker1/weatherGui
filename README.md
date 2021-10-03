@@ -1,5 +1,7 @@
-# weathergui
+# Frontend for RPI4 Weatherstation
 
+# Preview
+![foo](./src/assets/preview.png)
 ## Project setup
 ```
 npm install
