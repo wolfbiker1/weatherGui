@@ -7,7 +7,7 @@ import "./styles/style.scss";
 import axios from "axios";
 
 Vue.config.productionTip = false;
-axios.defaults.baseURL = "http://192.168.178.51:7878";
+axios.defaults.baseURL = "http://192.168.178.66:7878";
 
 new Vue({
   router,
