@@ -1,26 +1,15 @@
-# Frontend for RPI4 Weatherstation
+# Webapplication frontend for a Raspberry Pi 4 weatherstation
+
+# What it does
+This application is written in JavaScript / VueJS acts as a full featured weather station running in the web browser.
+The main features are display current measurements, peak values (*min*, *max*, *avg*) and a special feature is the possibility to watch long-term data.
+The graphical visualization is done with the javascript library d3.
 
 # Preview
-![foo](./src/assets/preview.png)
-## Project setup
-```
-npm install
-```
+![Weatherstation](./src/assets/preview.png)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+# Annotations
+This application does not run stand alone and depends from this repositories:
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[APIServer](https://github.com/wolfbiker1/weatherStationAPIServer)
+[SensorDrivers](https://github.com/wolfbiker1/sensorDrivers)
