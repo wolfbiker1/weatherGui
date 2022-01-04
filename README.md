@@ -20,7 +20,7 @@ The graphical visualization is done with the javascript library d3.
 * Calculating forecast values based on air pressure
 
 # Annotations
-This application does not run stand alone and depends from this repositories:
+This application does not run stand alone and depends from [APIServer] and [Sensordrivers]
 
-[APIServer](https://github.com/wolfbiker1/weatherStationAPIServer)
-[SensorDrivers](https://github.com/wolfbiker1/sensorDrivers)
+[APIServer]: https://github.com/wolfbiker1/weatherStationAPIServer (APIServer)
+[Sensordrivers]: https://github.com/wolfbiker1/sensorDrivers (Sensordrivers)
