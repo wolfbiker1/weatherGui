@@ -14,7 +14,7 @@
 
       <article class="p-2 m-2">
         <MeasurementGraphs
-          :apiRoute="'temp'"
+          :apiRoute="'temperatue'"
           :field="'tempPlot'"
           :strokeColor="'#fcd408'"
           :areaColor="'#cfe4ff'"
