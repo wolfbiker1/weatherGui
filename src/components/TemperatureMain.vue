@@ -7,7 +7,7 @@
       <div class="pressureval pl-2 m-2 mt-8">
         <MeasurementValues
           :color="'text-sharp-yellow'"
-          :field="'temp'"
+          :field="'temperatue'"
           :unit="'°C'"
         />
       </div>
@@ -27,7 +27,7 @@
       <ControlBar
         :hoverColor="'hover:bg-sharp-yellow'"
         :borderColor="'border-sharp-yellow'"
-        :field="'temp'"
+        :field="'temperatue'"
       />
     </footer>
   </div>
