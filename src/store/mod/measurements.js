@@ -24,7 +24,10 @@ const mutations = {
 const actions = {
   fetchTemp({ commit }) {
     axios.get("/temperature").then((res) => {
-      commit("storeMeasurement", { field: "temperature", value: res.data.value });
+      commit("storeMeasurement", {
+        field: "temperature",
+        value: res.data.value,
+      });
       commit(
         "history/addHistoryEntry",
         { field: "temperature", value: res.data },

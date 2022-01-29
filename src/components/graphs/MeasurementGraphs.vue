@@ -92,7 +92,9 @@ export default {
       // set the dimensions and margins of the graph
       const window = this.setUpWindow();
       const start = this.getCurrentHistory[0].date_of_record;
-      const end = this.getCurrentHistory[this.getCurrentHistory.length - 1].date_of_record;
+      const end =
+        this.getCurrentHistory[this.getCurrentHistory.length - 1]
+          .date_of_record;
 
       /*** DO NOT DELETE!!!! ***/
       // short time period
