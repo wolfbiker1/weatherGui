@@ -7,14 +7,14 @@
       <div class="pressureval pl-2 m-2 mt-8">
         <MeasurementValues
           :color="'text-sharp-yellow'"
-          :field="'temperatue'"
+          :field="'temperature'"
           :unit="'°C'"
         />
       </div>
 
       <article class="p-2 m-2">
         <MeasurementGraphs
-          :apiRoute="'temperatue'"
+          :apiRoute="'temperature'"
           :field="'tempPlot'"
           :strokeColor="'#fcd408'"
           :areaColor="'#cfe4ff'"
@@ -27,7 +27,7 @@
       <ControlBar
         :hoverColor="'hover:bg-sharp-yellow'"
         :borderColor="'border-sharp-yellow'"
-        :field="'temperatue'"
+        :field="'temperature'"
       />
     </footer>
   </div>

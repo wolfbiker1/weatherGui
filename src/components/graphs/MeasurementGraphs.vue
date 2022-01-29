@@ -46,10 +46,10 @@ export default {
       return d3
         .line()
         .x(function (d) {
-          return x(new Date(d.x));
+          return x(new Date(d.date_of_record));
         })
         .y(function (d) {
-          return y(d.y);
+          return y(d.value);
         })
         .curve(d3.curveMonotoneX);
     },
@@ -57,11 +57,11 @@ export default {
       return d3
         .area()
         .x(function (d) {
-          return x(new Date(d.x));
+          return x(new Date(d.date_of_record));
         })
         .y0(window.height)
         .y1(function (d) {
-          return y(d.y);
+          return y(d.value);
         });
     },
     createXAxis(start, end, window) {
@@ -87,20 +87,19 @@ export default {
     },
     drawPlot() {
       const dataset = this.getCurrentHistory;
-      // console.log(dataset);
       this.removePlot();
 
       // set the dimensions and margins of the graph
       const window = this.setUpWindow();
-      const start = this.getCurrentHistory[0].x;
-      const end = this.getCurrentHistory[this.getCurrentHistory.length - 1].x;
+      const start = this.getCurrentHistory[0].date_of_record;
+      const end = this.getCurrentHistory[this.getCurrentHistory.length - 1].date_of_record;
 
       /*** DO NOT DELETE!!!! ***/
       // short time period
       var x = this.createXAxis(start, end, window);
 
       const getYs = () => {
-        return dataset.map((e) => e.y);
+        return dataset.map((e) => e.value);
       };
       const y = this.createYAxis(
         Math.min(...getYs()),
@@ -112,11 +111,11 @@ export default {
       const area = d3
         .area()
         .x(function (d) {
-          return x(new Date(d.x));
+          return x(new Date(d.date_of_record));
         })
         .y0(window.height)
         .y1(function (d) {
-          return y(d.y);
+          return y(d.value);
         });
       // few days
       this.mode = 0;

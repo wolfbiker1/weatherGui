@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const fields = ["temp", "pressure", "humidity", "brightness"];
+const fields = ["temperature", "pressure", "humidity", "brightness"];
 
 // const borders = [
 //   "left", "right"]
@@ -33,19 +33,19 @@ function dateTimeOffset(hours) {
 
 const state = () => ({
   history: {
-    temp: [],
+    temperature: [],
     pressure: [],
     humidity: [],
     brightness: [],
   },
   dates: {
-    temp: [],
+    temperature: [],
     pressure: [],
     humidity: [],
     brightness: [],
   },
   timeRange: {
-    temp: {
+    temperature: {
       left: {
         date: "2021-10-03",
         time: "08:07:01",
@@ -112,8 +112,8 @@ const mutations = {
   },
   addHistoryEntry(state, payload) {
     state.history[payload.field].push({
-      x: payload.value.time,
-      y: payload.value.value,
+      date_of_record: payload.value.time,
+      value: payload.value.value,
     });
   },
   setupCurrentDate(state) {
@@ -143,24 +143,11 @@ const mutations = {
 
 const actions = {
   fetchAvailableDates({ commit }) {
-    axios.get(`/available_dates/`).then((res) => {
+    axios.get(`/available_dates`).then((res) => {
       commit("setBorders", JSON.parse(res.data));
     });
   },
   async fetchHistory({ commit, state }, field) {
-    // defines right edge of graph, 0 means now
-    // const borderRight = dateTimeOffset(state.timeRange[field].right).split(" ");
-
-    // how many hours show from the past
-    // const borderLeft = dateTimeOffset(state.timeRange[field].left).split(" ");
-
-    // return axios.get(`/hist/for/${mapper[field]}`).then((res) => {
-    //   const dataAsJson = [];
-    //   res.data.forEach((res) => {
-    //     dataAsJson.push(JSON.parse(res));
-    //   });
-    //   commit("storeCurrentHistory", { field: field, data: dataAsJson });
-    // });
     return axios
       .get(
         `/hist_range/${field}/${state.timeRange[field].left.date}/${state.timeRange[field].left.time}/${state.timeRange[field].right.date}/${state.timeRange[field].right.time}`

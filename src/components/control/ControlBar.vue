@@ -91,21 +91,17 @@ export default {
     hoverColor: String,
   },
   mounted() {
-    // this.fetchAvailableDates(this.field);
     setTimeout(() => {
       this.getAvailableDates(this.field);
       this.isReady = true;
     }, 1000);
-    // console.log(this.getAvailableDates());
   },
   computed: {
     ...mapGetters("history", ["getBoundary", "getAvailableDates"]),
   },
   methods: {
     ...mapActions("history", ["fetchAvailableDates"]),
-    setDate() {
-      console.log("foo...");
-    },
+    setDate() {},
   },
   data() {
     return {

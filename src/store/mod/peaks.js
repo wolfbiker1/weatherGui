@@ -7,7 +7,7 @@ const state = () => ({
       avg: 0.0,
       min: 0.0,
     },
-    temp: {
+    temperature: {
       max: 0.0,
       avg: 0.0,
       min: 0.0,
