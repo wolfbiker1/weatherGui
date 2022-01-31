@@ -26,7 +26,7 @@
     <footer class="text-center p-2">
       <ControlBar
         :hoverColor="'hover:bg-sharp-yellow'"
-        :borderColor="'border-sharp-yellow'"
+        :textColor="'text-sharp-yellow'"
         :field="'temperature'"
       />
     </footer>

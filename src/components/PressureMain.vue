@@ -27,7 +27,7 @@
     <footer class="text-center m-2">
       <ControlBar
         :hoverColor="'hover:bg-ice-blue'"
-        :borderColor="'border-ice-blue'"
+        :textColor="'text-ice-blue'"
         :field="'pressure'"
       />
     </footer>

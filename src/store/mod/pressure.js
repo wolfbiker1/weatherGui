@@ -3,11 +3,16 @@ import axios from "axios";
 const state = () => ({
   currentPressure: 0,
   history: [],
+  // chart, bar
+  selectedButton: "chart",
 });
 
 const getters = {
   getCurrentPressure(state) {
     return state.currentPressure;
+  },
+  getSelectedButton(state) {
+    return state.selectedButton;
   },
   getCurrentHistory(state) {
     return state.history;
@@ -15,6 +20,9 @@ const getters = {
 };
 
 const mutations = {
+  setSelectedButton(state, pressedButton) {
+    state.selectedButton = pressedButton;
+  },
   storeCurrentPressure(state, pressure) {
     state.currentPressure = pressure.value;
     state.history.push({ x: pressure.time, y: pressure.value });

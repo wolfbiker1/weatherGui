@@ -7,6 +7,7 @@ import humidity from "./mod/humidity";
 import peaks from "./mod/peaks";
 import measurements from "./mod/measurements";
 import history from "./mod/history";
+import control from "./mod/control";
 
 Vue.use(Vuex);
 
@@ -19,5 +20,6 @@ export default new Vuex.Store({
     peaks,
     measurements,
     history,
+    control,
   },
 });

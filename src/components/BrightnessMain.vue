@@ -26,7 +26,7 @@
     <footer class="text-center p-2">
       <ControlBar
         :hoverColor="'hover:bg-sharp-red'"
-        :borderColor="'border-sharp-red'"
+        :textColor="'text-sharp-red'"
         :field="'brightness'"
       />
     </footer>

@@ -38,6 +38,12 @@ const state = () => ({
     humidity: [],
     brightness: [],
   },
+  trends: {
+    temperature: 0.0,
+    pressure: 0.0,
+    humidity: 0.0,
+    brightness: 0.0,
+  },
   dates: {
     temperature: [],
     pressure: [],
@@ -125,26 +131,29 @@ const mutations = {
     const dateOffset = dtOffset[0];
     const timeOffset = dtOffset[1];
     for (const field of fields) {
-      // for (const border of borders) {
       state.timeRange[field]["left"].date = dateOffset;
       state.timeRange[field]["left"].time = timeOffset;
       state.timeRange[field]["right"].date = dateNow;
       state.timeRange[field]["right"].time = timeNow;
-      // }
     }
   },
   storeCurrentHistory(state, payload) {
     state.history[payload.field] = payload.data;
-
-    // JUST FOR DEBUG
-    // state.history[payload.field].reverse();
   },
+  storeTrendValue(state, payload) {
+    state[payload.field] = payload.trendValue;
+  }
 };
 
 const actions = {
   fetchAvailableDates({ commit }) {
     axios.get(`/available_dates`).then((res) => {
       commit("setBorders", JSON.parse(res.data));
+    });
+  },
+  async fetchTrend({ commit}, field) {
+    return axios.get(`/trend/for/${field}`).then((res) => {
+      commit("storeTrendValue", { field: field, trendValue: res.data });
     });
   },
   async fetchHistory({ commit, state }, field) {

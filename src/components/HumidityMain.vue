@@ -27,7 +27,7 @@
     <footer class="text-center p-2">
       <ControlBar
         :hoverColor="'hover:bg-sharp-green'"
-        :borderColor="'border-sharp-green'"
+        :textColor="'text-sharp-green'"
         :field="'humidity'"
       />
     </footer>
