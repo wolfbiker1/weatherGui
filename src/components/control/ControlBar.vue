@@ -1,83 +1,24 @@
 <template>
   <div class="inline-flex gap-6">
-    <button
-      class="text-gray-300 font-bold py-1 px-4 border rounded"
-      :class="[borderColor, hoverColor]"
-    >
-      -24h
+    <button class="font-bold py-1 px-4 mb-1 rounded" :class="[borderColor]">
+      <!-- <div> -->
+      <span class="ml-8 mr-8">
+        <i class="fas fa-minus" :class="borderColor"></i>
+      </span>
+      <span class="ml-8 mr-8">
+        <i class="fas fa-arrow-up" :class="borderColor"></i>
+      </span>
+      <span class="ml-8 mr-8">
+        <i class="fas fa-chart-bar" :class="borderColor"></i>
+      </span>
+      <span class="ml-8 mr-8">
+        <i class="fas fa-chart-line" :class="borderColor"></i>
+      </span>
+      <span class="ml-8 mr-8" :class="borderColor">
+        <i class="fas fa-plus" :class="borderColor"></i>
+      </span>
+      <!-- </div> -->
     </button>
-    <button
-      class="text-gray-300 font-bold py-1 px-4 border rounded"
-      :class="[borderColor, hoverColor]"
-    >
-      trend
-    </button>
-
-    <div class="dropdown inline-block relative">
-      <button
-        :class="borderColor"
-        class="
-          text-gray-300
-          font-semibold
-          py-1
-          px-1
-          border
-          rounded
-          inline-flex
-          items-center
-        "
-      >
-        <span class="mr-1" v-if="isReady">Start Date</span>
-        <span class="mr-1" v-else>Loading...</span>
-      </button>
-      <ul
-        v-if="isReady"
-        class="dropdown-menu absolute hidden text-gray-700 pt-1"
-      >
-        <li v-for="x in getAvailableDates(field)" :key="x">
-          <span
-            class="text-gray-300 hover:bg-gray-700"
-            :class="[borderColor]"
-            @click="setDate()"
-          >
-            {{ x }}
-          </span>
-        </li>
-      </ul>
-    </div>
-
-    <div class="dropdown inline-block relative">
-      <button
-        :class="borderColor"
-        class="
-          text-gray-300
-          font-semibold
-          py-1
-          px-1
-          border
-          rounded
-          inline-flex
-          items-center
-        "
-      >
-        <span class="mr-1" v-if="isReady">End Date</span>
-        <span class="mr-1" v-else>Loading...</span>
-      </button>
-      <ul
-        v-if="isReady"
-        class="dropdown-menu absolute hidden text-gray-700 pt-1"
-      >
-        <li v-for="x in getAvailableDates(field)" :key="x">
-          <span
-            class="text-gray-300 hover:bg-gray-700"
-            :class="[borderColor]"
-            @click="setDate()"
-          >
-            {{ x }}
-          </span>
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 

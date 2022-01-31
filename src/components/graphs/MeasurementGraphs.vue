@@ -76,8 +76,8 @@ export default {
     setUpWindow() {
       const margin = { top: 20, right: 20, bottom: 50, left: 70 };
       return {
-        width: 500 - margin.left - margin.right,
-        height: 300 - margin.top - margin.bottom,
+        width: window.innerWidth / 4 - margin.left - margin.right,
+        height: window.innerHeight / 3 - margin.top - margin.bottom,
         margin: margin,
       };
     },

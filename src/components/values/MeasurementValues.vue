@@ -11,32 +11,34 @@
         </div>
       </div>
       <div>
-        <p>n/a</p>
+        <span>
+          <i class="fas fa-arrow-up" :class="color"></i>
+        </span>
       </div>
     </div>
     <div>
       <div class="block text-center mt-4">
         <div class="p-2">
           <div class="inline block">
-            <span :class="color"><i> Max </i></span>
-            <span class="text-white"
+            <span :class="color"><i> Max: </i></span>
+            <span class="text-gray-smooth"
               ><i> {{ getPeakData(field).max.toFixed(2) }} {{ unit }} </i></span
             >
           </div>
         </div>
         <div class="p-2">
           <div class="inline block">
-            <span :class="color"><i> Avg </i></span>
-            <span class="text-white"
+            <span :class="color"><i> Avg: </i></span>
+            <span class="text-gray-smooth"
               ><i> {{ getPeakData(field).avg.toFixed(2) }} {{ unit }} </i></span
             >
           </div>
         </div>
         <div class="p-2">
           <div class="inline block">
-            <span :class="color"><i> Min </i></span>
-            <span class="text-white"
-              ><i> {{ getPeakData(field).min.toFixed(2) }} {{ unit }} </i></span
+            <span :class="color"><i> Min: </i></span>
+            <span class="text-gray-smooth"
+              ><i> {{ getPeakData(field).min.toFixed(2) }} {{ unit }}</i></span
             >
           </div>
         </div>

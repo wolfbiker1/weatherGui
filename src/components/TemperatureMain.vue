@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="text-center m-2">
-      <h1 class="text-3xl text-white">Outdoor Temperature</h1>
+      <h1 class="text-3xl text-white">Temperature</h1>
     </header>
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
@@ -12,7 +12,7 @@
         />
       </div>
 
-      <article class="p-2 m-2">
+      <article class="p-2 m-2 ml-12">
         <MeasurementGraphs
           :apiRoute="'temperature'"
           :field="'tempPlot'"

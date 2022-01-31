@@ -12,7 +12,7 @@
         />
       </div>
 
-      <article class="p-2 m-2">
+      <article class="p-2 m-2 ml-12">
         <!-- <HumidityGraph /> -->
         <MeasurementGraphs
           :apiRoute="'humidity'"
