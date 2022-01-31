@@ -6,7 +6,7 @@ const fields = ["temperature", "pressure", "humidity", "brightness"];
 //   "left", "right"]
 
 // unit -> hours
-const defaultBackwardCnt = 3;
+const defaultBackwardCnt = 12;
 
 function dateTimeNow() {
   const now = new Date();
