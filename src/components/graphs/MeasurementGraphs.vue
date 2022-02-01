@@ -18,16 +18,18 @@ export default {
     apiRoute: String,
   },
   computed: {
-    ...mapGetters("history", ["getHistory"]),
+    ...mapGetters("history", ["getHistory", "historyIsLoaded"]),
     getCurrentHistory() {
       return this.getHistory(this.apiRoute);
     },
   },
   mounted() {
+
     this.fetchHist();
 
+
+      //this.drawPlot();
     setInterval(() => {
-      this.drawPlot();
     }, 15000);
   },
   data() {
@@ -38,9 +40,16 @@ export default {
   methods: {
     ...mapActions("history", ["fetchHistory"]),
     fetchHist() {
-      this.fetchHistory(this.apiRoute).then(() => {
+      if (!this.historyIsLoaded) {
+            this.fetchHistory(this.apiRoute).then(() => {
+            this.drawPlot();
+        });
+      } else {
         this.drawPlot();
-      });
+      }
+      //this.fetchHistory(this.apiRoute).then(() => {
+      //  this.drawPlot();
+      //});
     },
     createDataLine(x, y) {
       return d3
@@ -76,8 +85,8 @@ export default {
     setUpWindow() {
       const margin = { top: 20, right: 20, bottom: 50, left: 70 };
       return {
-        width: 500 - margin.left - margin.right,
-        height: 300 - margin.top - margin.bottom,
+        width: window.innerWidth / 4 - margin.left - margin.right,
+        height: window.innerHeight / 3 - margin.top - margin.bottom,
         margin: margin,
       };
     },
@@ -180,7 +189,12 @@ export default {
             .tickFormat(
               this.mode === 0 ? d3.timeFormat("%H:%M") : d3.timeFormat("%d/%m")
             )
-        );
+        )
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-65)");
 
       // Add the y Axis
       svg
