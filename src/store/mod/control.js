@@ -17,7 +17,6 @@ const getters = {
 const mutations = {
   setSelectedButton(state, payload) {
     state.selectedButton[payload.field] = payload.pressedButton;
-    console.log(state.selectedButton);
   },
 };
 

@@ -12,7 +12,17 @@
       </div>
       <div>
         <span>
-          <i class="fas fa-arrow-up" :class="color"></i>
+          <i
+            class="fas fa-arrow-up"
+            :class="color"
+            v-if="getTrend(field) > 0.0"
+          ></i>
+          <i
+            class="fas fa-arrow-right"
+            :class="color"
+            v-else-if="getTrend(field) === 0.0"
+          ></i>
+          <i class="fas fa-arrow-down" :class="color" v-else></i>
         </span>
       </div>
     </div>
@@ -59,16 +69,19 @@ export default {
   },
   computed: {
     ...mapGetters("measurements", ["getMeasurement"]),
+    ...mapGetters("history", ["getTrend"]),
     ...mapGetters("peaks", ["getPeakData"]),
   },
   mounted() {
     this.fetchPeakData();
+    this.fetchTrend(this.field);
     // setInterval(() => {
     //   this.fetchCurrentHumidity();
     // }, 5000);
   },
   methods: {
     ...mapActions("peaks", ["fetchPeakData"]),
+    ...mapActions("history", ["fetchTrend"]),
   },
 };
 </script>

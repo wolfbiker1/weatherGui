@@ -102,6 +102,9 @@ const getters = {
   historyIsLoaded(state) {
     return state.historyIsLoaded
   },
+  getTrend: (state) => (field) => {
+    return state.trends[field];
+  },
   getHistory: (state) => (field) => {
     return state.history[field];
   },
