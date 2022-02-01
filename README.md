@@ -6,14 +6,14 @@ The main features are display current measurements, peak values (*min*, *max*, *
 The graphical visualization is done with the javascript library d3.
 
 # Preview
-![Weatherstation](./src/assets/preview.png)
+![Weatherstation](./src/assets/preview_new.png)
 
 # Progress
 
 ## Implemented
 * Watch current values
 * Watch peak values
-* Graphical data visualization of the past three hours
+* Toggle between 24h graph and barchart on hourly average
 
 ## Todo
 * Customize the visible history time range
