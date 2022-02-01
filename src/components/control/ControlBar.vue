@@ -2,7 +2,7 @@
   <div class="inline-flex gap-6">
     <button class="font-bold py-1 px-4 mb-1 rounded">
       <span class="ml-8 mr-8" @click="foo">
-        <i class="fas fa-minus" :class="isSelected('minus')"></i>
+        <i class="fas fa-chevron-left" :class="isSelected('minus')"></i>
       </span>
       <span class="ml-8 mr-8">
         <i class="fas fa-chart-bar" :class="isSelected('chart')"></i>
@@ -11,7 +11,7 @@
         <i class="fas fa-chart-line" :class="isSelected('graph')"></i>
       </span>
       <span class="ml-8 mr-8">
-        <i class="fas fa-plus" :class="isSelected('plus')"></i>
+        <i class="fas fa-chevron-right" :class="isSelected('plus')"></i>
       </span>
     </button>
   </div>
@@ -42,7 +42,7 @@ export default {
     isSelected(buttonName) {
       // console.log(this.getSelectedButton(this.field) , buttonName);
       if (this.getSelectedButton(this.field) === buttonName) {
-        return this.textColor
+        return this.textColor;
       }
       //  return this.getSelectedButton(this.field) === buttonName;
     },

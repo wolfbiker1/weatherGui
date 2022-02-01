@@ -32,6 +32,12 @@ function dateTimeOffset(hours) {
 }
 
 const state = () => ({
+  barChart: {
+    temperature: [],
+    pressure: [],
+    humidity: [],
+    brightness: [],
+  },
   history: {
     temperature: [],
     pressure: [],
@@ -98,6 +104,9 @@ const getters = {
   getHistory: (state) => (field) => {
     return state.history[field];
   },
+  getBarChart: (state) => (field) => {
+    return state.barChart[field];
+  },
   getAvailableDates: (state) => (field) => {
     return JSON.parse(state.dates[field]);
   },
@@ -141,8 +150,11 @@ const mutations = {
     state.history[payload.field] = payload.data;
   },
   storeTrendValue(state, payload) {
-    state[payload.field] = payload.trendValue;
-  }
+    state.trends[payload.field] = payload.trendValue;
+  },
+  storeBarChart(state, payload) {
+    state.barChart[payload.field] = payload.barChartValues;
+  },
 };
 
 const actions = {
@@ -151,9 +163,18 @@ const actions = {
       commit("setBorders", JSON.parse(res.data));
     });
   },
-  async fetchTrend({ commit}, field) {
+  async fetchTrend({ commit }, field) {
     return axios.get(`/trend/for/${field}`).then((res) => {
       commit("storeTrendValue", { field: field, trendValue: res.data });
+    });
+  },
+  async fetchBarChartHistory({ commit }, field) {
+    return axios.get(`/barchart/for/${field}`).then((res) => {
+      const dataAsJson = [];
+      res.data.forEach((res) => {
+        dataAsJson.push(JSON.parse(res));
+      });
+      commit("storeBarChart", { field: field, barChartValues: dataAsJson });
     });
   },
   async fetchHistory({ commit, state }, field) {

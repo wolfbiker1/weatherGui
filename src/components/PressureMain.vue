@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="text-center m-2">
-      <h1 class="text-3xl text-white">Air Pressure</h1>
+      <h1 class="text-3xl text-white"><i>Air Pressure</i></h1>
     </header>
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
