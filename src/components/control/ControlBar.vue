@@ -6,23 +6,27 @@
       </span>
       <span
         class="ml-8 mr-8"
-        @click="setSelectedButton({ field: field, pressedButton: 'chart' })"
+        @click="selectGraph({ field: field, pressedButton: 'chart' })"
       >
         <i
           class="fas fa-chart-bar"
-          :class="[isSelected('chart') ? this.textColor : 'red']"
+          :class="[
+            this.getSelectedButton(field) === 'chart' ? this.textColor : 'red',
+          ]"
         ></i>
       </span>
       <span
         class="ml-8 mr-8"
-        @click="setSelectedButton({ field: field, pressedButton: 'graph' })"
+        @click="selectGraph({ field: field, pressedButton: 'graph' })"
       >
         <i
           class="fas fa-chart-line"
-          :class="[isSelected('graph') ? this.textColor : 'red']"
+          :class="[
+            this.getSelectedButton(field) === 'graph' ? this.textColor : 'red',
+          ]"
         ></i>
       </span>
-      <span class="ml-8 mr-8">
+      <span class="ml-8 mr-8" @click="foo()">
         <i class="fas fa-chevron-right" :class="isSelected('plus')"></i>
       </span>
     </button>
@@ -40,8 +44,8 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      this.getAvailableDates(this.field);
-      this.isReady = true;
+      //this.getAvailableDates(this.field);
+      //this.isReady = true;
     }, 1000);
   },
   computed: {
@@ -51,15 +55,15 @@ export default {
   methods: {
     ...mapActions("history", ["fetchAvailableDates"]),
     ...mapMutations("control", ["setSelectedButton"]),
+    selectGraph(payload) {
+      this.setSelectedButton(payload);
+      this.$forceUpdate();
+    },
     isSelected(buttonName) {
       return this.getSelectedButton(this.field) === buttonName;
-      //if (this.getSelectedButton(this.field) === buttonName) {
-      //  console.log("schubbs");
-      //  return this.textColor;
-      //}
     },
     foo() {
-      console.log("bar!");
+      console.log(this.getSelectedButton("temperature"));
     },
   },
   data() {

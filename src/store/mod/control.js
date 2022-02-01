@@ -9,6 +9,7 @@ const state = () => ({
 
 const getters = {
   getSelectedButton: (state) => (field) => {
+    console.log(field);
     return state.selectedButton[field];
   },
 };
@@ -16,6 +17,7 @@ const getters = {
 const mutations = {
   setSelectedButton(state, payload) {
     state.selectedButton[payload.field] = payload.pressedButton;
+    console.log(state.selectedButton);
   },
 };
 

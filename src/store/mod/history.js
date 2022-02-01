@@ -95,9 +95,13 @@ const state = () => ({
       },
     },
   },
+  historyIsLoaded: false,
 });
 
 const getters = {
+  historyIsLoaded(state) {
+    return state.historyIsLoaded
+  },
   getHistory: (state) => (field) => {
     return state.history[field];
   },
@@ -145,6 +149,7 @@ const mutations = {
   },
   storeCurrentHistory(state, payload) {
     state.history[payload.field] = payload.data;
+    state.historyIsLoaded = true;
   },
   storeTrendValue(state, payload) {
     state.trends[payload.field] = payload.trendValue;

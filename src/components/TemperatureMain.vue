@@ -13,24 +13,26 @@
       </div>
 
       <article class="p-2 m-2 ml-12">
-        <div v-if="getSelectedButton('temperature') === 'graph'">
-          <MeasurementGraphs
-            :apiRoute="'temperature'"
-            :field="'tempPlot'"
-            :strokeColor="'#fcd408'"
-            :areaColor="'#cfe4ff'"
-            :plotId="'tempGraph'"
-          />
-        </div>
-        <div v-else-if="getSelectedButton('temperature') === 'chart'">
-          <MeasurementBarChart
-            :apiRoute="'temperature'"
-            :field="'tempPlot'"
-            :strokeColor="'#fcd408'"
-            :areaColor="'#cfe4ff'"
-            :plotId="'tempGraph'"
-          />
-        </div>
+        <!-- <div v-if="getSelectedButton('temperature') === 'graph'"> -->
+        <MeasurementGraphs
+          v-if="getSelectedButton('temperature') === 'graph'"
+          :apiRoute="'temperature'"
+          :field="'tempPlot'"
+          :strokeColor="'#fcd408'"
+          :areaColor="'#cfe4ff'"
+          :plotId="'tempGraph'"
+        />
+        <!-- </div> -->
+        <!-- <div v-else-if="getSelectedButton('temperature') === 'chart'"> -->
+        <MeasurementBarChart
+          v-else
+          :apiRoute="'temperature'"
+          :field="'tempPlot'"
+          :strokeColor="'#fcd408'"
+          :areaColor="'#cfe4ff'"
+          :plotId="'tempGraph'"
+        />
+        <!-- </div> -->
       </article>
     </section>
 
