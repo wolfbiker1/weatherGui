@@ -42,8 +42,7 @@ export default {
         this.drawPlot();
       });
     },
-    createXAxis(start, end, window) {
-      // return d3.scaleLinear().domain([start, end]).range([0, window.width]);
+    createXAxis(window) {
       return d3.scaleLinear().range([0, window.width]);
     },
     createYAxis(start, end, window) {
@@ -63,7 +62,6 @@ export default {
     drawPlot() {
       let dataset = this.getCurrentHistory;
       // dataset = dataset.reverse();
-      console.log(dataset);
       this.removePlot();
       const window = this.setUpWindow();
       // set the ranges
@@ -75,8 +73,14 @@ export default {
           return d.date_of_record;
         })
       );
+
+      // let domainMin;
+      // if (this.f)
+
       y.domain([
-        0,
+        d3.min(dataset, function (d) {
+          return d.value;
+        }),
         d3.max(dataset, function (d) {
           return d.value;
         }),
@@ -104,12 +108,10 @@ export default {
         .append("rect")
         .attr("class", "bar")
         .attr("x", function (d) {
-          console.log(d.date_of_record);
           return x(d.date_of_record);
         })
         .attr("width", x.bandwidth())
         .attr("y", function (d) {
-          console.log(d.value);
           return y(d.value);
         })
         .attr("height", function (d) {
@@ -129,7 +131,6 @@ export default {
         .attr("dx", "-.8em")
         .attr("dy", ".15em")
         .attr("transform", "rotate(-65)");
-
 
       // Add the y Axis
       svg

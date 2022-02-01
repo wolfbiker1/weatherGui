@@ -13,14 +13,24 @@
       </div>
 
       <article class="p-2 m-2 ml-12">
-        <!-- <HumidityGraph /> -->
-        <MeasurementGraphs
-          :apiRoute="'humidity'"
-          :field="'humidityPlot'"
-          :strokeColor="'#08fc34'"
-          :areaColor="'#cfe4ff'"
-          :plotId="'humidityGraph'"
-        />
+        <div v-if="getSelectedButton('humidity') === 'graph'">
+          <MeasurementGraphs
+            :apiRoute="'humidity'"
+            :field="'humidityPlot'"
+            :strokeColor="'#08fc34'"
+            :areaColor="'#cfe4ff'"
+            :plotId="'humidityGraph'"
+          />
+        </div>
+        <div v-if="getSelectedButton('humidity') === 'chart'">
+          <MeasurementBarChart
+            :apiRoute="'humidity'"
+            :field="'humidityPlot'"
+            :strokeColor="'#08fc34'"
+            :areaColor="'#cfe4ff'"
+            :plotId="'humidityGraph'"
+          />
+        </div>
       </article>
     </section>
 
@@ -36,8 +46,10 @@
 
 <script>
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
+import MeasurementBarChart from "./graphs/MeasurementBarChart.vue";
 import MeasurementValues from "./values/MeasurementValues.vue";
 import ControlBar from "./control/ControlBar.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "HumidityMain",
   props: {
@@ -45,8 +57,12 @@ export default {
   },
   components: {
     MeasurementGraphs,
+    MeasurementBarChart,
     MeasurementValues,
     ControlBar,
+  },
+  computed: {
+    ...mapGetters("control", ["getSelectedButton"]),
   },
   methods: {},
 };

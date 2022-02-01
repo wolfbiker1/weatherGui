@@ -1,6 +1,6 @@
 const state = () => ({
   selectedButton: {
-    temperature: "chart",
+    temperature: "graph",
     pressure: "graph",
     brightness: "graph",
     humidity: "graph",

@@ -13,13 +13,24 @@
       </div>
 
       <article class="p-2 m-2 ml-12">
-        <MeasurementGraphs
-          :apiRoute="'brightness'"
-          :field="'brightnessPlot'"
-          :strokeColor="'#fc0808'"
-          :areaColor="'#cfe4ff'"
-          :plotId="'brightnessGraph'"
-        />
+        <div v-if="getSelectedButton('brightness') === 'graph'">
+          <MeasurementGraphs
+            :apiRoute="'brightness'"
+            :field="'brightnessPlot'"
+            :strokeColor="'#fc0808'"
+            :areaColor="'#cfe4ff'"
+            :plotId="'brightnessGraph'"
+          />
+        </div>
+        <div v-if="getSelectedButton('brightness') === 'chart'">
+          <MeasurementBarChart
+            :apiRoute="'brightness'"
+            :field="'brightnessPlot'"
+            :strokeColor="'#fc0808'"
+            :areaColor="'#cfe4ff'"
+            :plotId="'brightnessGraph'"
+          />
+        </div>
       </article>
     </section>
 
@@ -35,8 +46,10 @@
 
 <script>
 import MeasurementValues from "./values/MeasurementValues.vue";
+import MeasurementBarChart from "./graphs/MeasurementBarChart.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
 import ControlBar from "./control/ControlBar.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "BrightnessMain",
   props: {
@@ -45,7 +58,11 @@ export default {
   components: {
     MeasurementGraphs,
     MeasurementValues,
+    MeasurementBarChart,
     ControlBar,
+  },
+  computed: {
+    ...mapGetters("control", ["getSelectedButton"]),
   },
 };
 </script>

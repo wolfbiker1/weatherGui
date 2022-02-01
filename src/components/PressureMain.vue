@@ -13,14 +13,24 @@
       </div>
 
       <article class="p-2 m-2">
-        <!-- <PressureGraph /> -->
-        <MeasurementGraphs
-          :apiRoute="'pressure'"
-          :field="'pressurePlot'"
-          :strokeColor="'#00ccff'"
-          :areaColor="'#cfe4ff'"
-          :plotId="'pressureGraph'"
-        />
+        <div v-if="getSelectedButton('pressure') === 'graph'">
+          <MeasurementGraphs
+            :apiRoute="'pressure'"
+            :field="'pressurePlot'"
+            :strokeColor="'#00ccff'"
+            :areaColor="'#cfe4ff'"
+            :plotId="'pressureGraph'"
+          />
+        </div>
+        <div v-else-if="getSelectedButton('pressure') === 'chart'">
+          <MeasurementBarChart
+            :apiRoute="'pressure'"
+            :field="'pressurePlot'"
+            :strokeColor="'#00ccff'"
+            :areaColor="'#cfe4ff'"
+            :plotId="'pressureGraph'"
+          />
+        </div>
       </article>
     </section>
 
@@ -36,8 +46,10 @@
 
 <script>
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
+import MeasurementBarChart from "./graphs/MeasurementBarChart.vue";
 import MeasurementValues from "./values/MeasurementValues.vue";
 import ControlBar from "./control/ControlBar.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "PressureMain",
   props: {
@@ -46,7 +58,11 @@ export default {
   components: {
     MeasurementGraphs,
     MeasurementValues,
+    MeasurementBarChart,
     ControlBar,
+  },
+  computed: {
+    ...mapGetters("control", ["getSelectedButton"]),
   },
   methods: {},
 };

@@ -2,9 +2,6 @@ import axios from "axios";
 
 const fields = ["temperature", "pressure", "humidity", "brightness"];
 
-// const borders = [
-//   "left", "right"]
-
 // unit -> hours
 const defaultBackwardCnt = 12;
 

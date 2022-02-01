@@ -50,7 +50,7 @@ import MeasurementBarChart from "./graphs/MeasurementBarChart.vue";
 
 import MeasurementValues from "./values/MeasurementValues.vue";
 import ControlBar from "./control/ControlBar.vue";
-import {mapGetters} from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   name: "TemperatureMain",

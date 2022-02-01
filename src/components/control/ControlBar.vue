@@ -4,11 +4,23 @@
       <span class="ml-8 mr-8" @click="foo">
         <i class="fas fa-chevron-left" :class="isSelected('minus')"></i>
       </span>
-      <span class="ml-8 mr-8">
-        <i class="fas fa-chart-bar" :class="isSelected('chart')"></i>
+      <span
+        class="ml-8 mr-8"
+        @click="setSelectedButton({ field: field, pressedButton: 'chart' })"
+      >
+        <i
+          class="fas fa-chart-bar"
+          :class="[isSelected('chart') ? this.textColor : 'red']"
+        ></i>
       </span>
-      <span class="ml-8 mr-8">
-        <i class="fas fa-chart-line" :class="isSelected('graph')"></i>
+      <span
+        class="ml-8 mr-8"
+        @click="setSelectedButton({ field: field, pressedButton: 'graph' })"
+      >
+        <i
+          class="fas fa-chart-line"
+          :class="[isSelected('graph') ? this.textColor : 'red']"
+        ></i>
       </span>
       <span class="ml-8 mr-8">
         <i class="fas fa-chevron-right" :class="isSelected('plus')"></i>
@@ -40,11 +52,11 @@ export default {
     ...mapActions("history", ["fetchAvailableDates"]),
     ...mapMutations("control", ["setSelectedButton"]),
     isSelected(buttonName) {
-      // console.log(this.getSelectedButton(this.field) , buttonName);
-      if (this.getSelectedButton(this.field) === buttonName) {
-        return this.textColor;
-      }
-      //  return this.getSelectedButton(this.field) === buttonName;
+      return this.getSelectedButton(this.field) === buttonName;
+      //if (this.getSelectedButton(this.field) === buttonName) {
+      //  console.log("schubbs");
+      //  return this.textColor;
+      //}
     },
     foo() {
       console.log("bar!");
