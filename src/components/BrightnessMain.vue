@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="text-center m-2">
-      <h1 class="text-3xl text-white">Brightness</h1>
+      <h1 class="text-3xl text-white"><i>Brightness</i></h1>
     </header>
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
@@ -12,21 +12,32 @@
         />
       </div>
 
-      <article class="p-2 m-2">
-        <MeasurementGraphs
-          :apiRoute="'brightness'"
-          :field="'brightnessPlot'"
-          :strokeColor="'#fc0808'"
-          :areaColor="'#cfe4ff'"
-          :plotId="'brightnessGraph'"
-        />
+      <article class="p-2 m-2 ml-12">
+        <div v-if="getSelectedButton('brightness') === 'graph'">
+          <MeasurementGraphs
+            :apiRoute="'brightness'"
+            :field="'brightnessPlot'"
+            :strokeColor="'#fc0808'"
+            :areaColor="'#cfe4ff'"
+            :plotId="'brightnessGraph'"
+          />
+        </div>
+        <div v-if="getSelectedButton('brightness') === 'chart'">
+          <MeasurementBarChart
+            :apiRoute="'brightness'"
+            :field="'brightnessPlot'"
+            :strokeColor="'#fc0808'"
+            :areaColor="'#cfe4ff'"
+            :plotId="'brightnessGraph'"
+          />
+        </div>
       </article>
     </section>
 
     <footer class="text-center p-2">
       <ControlBar
         :hoverColor="'hover:bg-sharp-red'"
-        :borderColor="'border-sharp-red'"
+        :textColor="'text-sharp-red'"
         :field="'brightness'"
       />
     </footer>
@@ -35,8 +46,10 @@
 
 <script>
 import MeasurementValues from "./values/MeasurementValues.vue";
+import MeasurementBarChart from "./graphs/MeasurementBarChart.vue";
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
 import ControlBar from "./control/ControlBar.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "BrightnessMain",
   props: {
@@ -45,7 +58,11 @@ export default {
   components: {
     MeasurementGraphs,
     MeasurementValues,
+    MeasurementBarChart,
     ControlBar,
+  },
+  computed: {
+    ...mapGetters("control", ["getSelectedButton"]),
   },
 };
 </script>

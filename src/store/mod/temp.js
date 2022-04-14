@@ -26,7 +26,7 @@ const mutations = {
 
 const actions = {
   fetchCurrentTemp({ commit }) {
-    axios.get("/outdoor_temp").then((res) => {
+    axios.get("/temperature").then((res) => {
       commit("storeCurrentTemp", res.data);
     });
   },

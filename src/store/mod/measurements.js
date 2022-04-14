@@ -2,7 +2,7 @@ import axios from "axios";
 
 const state = () => ({
   measurements: {
-    temp: 0,
+    temperature: 0,
     pressure: 0,
     humidity: 0,
     brightness: 0,
@@ -23,11 +23,14 @@ const mutations = {
 
 const actions = {
   fetchTemp({ commit }) {
-    axios.get("/temp").then((res) => {
-      commit("storeMeasurement", { field: "temp", value: res.data.value });
+    axios.get("/temperature").then((res) => {
+      commit("storeMeasurement", {
+        field: "temperature",
+        value: res.data.value,
+      });
       commit(
         "history/addHistoryEntry",
-        { field: "temp", value: res.data },
+        { field: "temperature", value: res.data },
         { root: true }
       );
     });

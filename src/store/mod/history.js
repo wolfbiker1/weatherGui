@@ -1,12 +1,9 @@
 import axios from "axios";
 
-const fields = ["temp", "pressure", "humidity", "brightness"];
-
-// const borders = [
-//   "left", "right"]
+const fields = ["temperature", "pressure", "humidity", "brightness"];
 
 // unit -> hours
-const defaultBackwardCnt = 3;
+const defaultBackwardCnt = 12;
 
 function dateTimeNow() {
   const now = new Date();
@@ -32,20 +29,32 @@ function dateTimeOffset(hours) {
 }
 
 const state = () => ({
-  history: {
-    temp: [],
+  barChart: {
+    temperature: [],
     pressure: [],
     humidity: [],
     brightness: [],
   },
+  history: {
+    temperature: [],
+    pressure: [],
+    humidity: [],
+    brightness: [],
+  },
+  trends: {
+    temperature: 0.0,
+    pressure: 0.0,
+    humidity: 0.0,
+    brightness: 0.0,
+  },
   dates: {
-    temp: [],
+    temperature: [],
     pressure: [],
     humidity: [],
     brightness: [],
   },
   timeRange: {
-    temp: {
+    temperature: {
       left: {
         date: "2021-10-03",
         time: "08:07:01",
@@ -86,11 +95,21 @@ const state = () => ({
       },
     },
   },
+  historyIsLoaded: false,
 });
 
 const getters = {
+  historyIsLoaded(state) {
+    return state.historyIsLoaded
+  },
+  getTrend: (state) => (field) => {
+    return state.trends[field];
+  },
   getHistory: (state) => (field) => {
     return state.history[field];
+  },
+  getBarChart: (state) => (field) => {
+    return state.barChart[field];
   },
   getAvailableDates: (state) => (field) => {
     return JSON.parse(state.dates[field]);
@@ -112,8 +131,8 @@ const mutations = {
   },
   addHistoryEntry(state, payload) {
     state.history[payload.field].push({
-      x: payload.value.time,
-      y: payload.value.value,
+      date_of_record: payload.value.time,
+      value: payload.value.value,
     });
   },
   setupCurrentDate(state) {
@@ -125,42 +144,45 @@ const mutations = {
     const dateOffset = dtOffset[0];
     const timeOffset = dtOffset[1];
     for (const field of fields) {
-      // for (const border of borders) {
       state.timeRange[field]["left"].date = dateOffset;
       state.timeRange[field]["left"].time = timeOffset;
       state.timeRange[field]["right"].date = dateNow;
       state.timeRange[field]["right"].time = timeNow;
-      // }
     }
   },
   storeCurrentHistory(state, payload) {
     state.history[payload.field] = payload.data;
-
-    // JUST FOR DEBUG
-    // state.history[payload.field].reverse();
+    state.historyIsLoaded = true;
+  },
+  storeTrendValue(state, payload) {
+    state.trends[payload.field] = payload.trendValue;
+  },
+  storeBarChart(state, payload) {
+    state.barChart[payload.field] = payload.barChartValues;
   },
 };
 
 const actions = {
   fetchAvailableDates({ commit }) {
-    axios.get(`/available_dates/`).then((res) => {
+    axios.get(`/available_dates`).then((res) => {
       commit("setBorders", JSON.parse(res.data));
     });
   },
+  async fetchTrend({ commit }, field) {
+    return axios.get(`/trend/for/${field}`).then((res) => {
+      commit("storeTrendValue", { field: field, trendValue: res.data });
+    });
+  },
+  async fetchBarChartHistory({ commit }, field) {
+    return axios.get(`/barchart/for/${field}`).then((res) => {
+      const dataAsJson = [];
+      res.data.forEach((res) => {
+        dataAsJson.push(JSON.parse(res));
+      });
+      commit("storeBarChart", { field: field, barChartValues: dataAsJson });
+    });
+  },
   async fetchHistory({ commit, state }, field) {
-    // defines right edge of graph, 0 means now
-    // const borderRight = dateTimeOffset(state.timeRange[field].right).split(" ");
-
-    // how many hours show from the past
-    // const borderLeft = dateTimeOffset(state.timeRange[field].left).split(" ");
-
-    // return axios.get(`/hist/for/${mapper[field]}`).then((res) => {
-    //   const dataAsJson = [];
-    //   res.data.forEach((res) => {
-    //     dataAsJson.push(JSON.parse(res));
-    //   });
-    //   commit("storeCurrentHistory", { field: field, data: dataAsJson });
-    // });
     return axios
       .get(
         `/hist_range/${field}/${state.timeRange[field].left.date}/${state.timeRange[field].left.time}/${state.timeRange[field].right.date}/${state.timeRange[field].right.time}`

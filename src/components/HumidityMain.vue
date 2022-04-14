@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="text-center m-2">
-      <h1 class="text-3xl text-white">Humidity</h1>
+      <h1 class="text-3xl text-white"><i>Humidity</i></h1>
     </header>
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
@@ -12,22 +12,32 @@
         />
       </div>
 
-      <article class="p-2 m-2">
-        <!-- <HumidityGraph /> -->
-        <MeasurementGraphs
-          :apiRoute="'humidity'"
-          :field="'humidityPlot'"
-          :strokeColor="'#08fc34'"
-          :areaColor="'#cfe4ff'"
-          :plotId="'humidityGraph'"
-        />
+      <article class="p-2 m-2 ml-12">
+        <div v-if="getSelectedButton('humidity') === 'graph'">
+          <MeasurementGraphs
+            :apiRoute="'humidity'"
+            :field="'humidityPlot'"
+            :strokeColor="'#08fc34'"
+            :areaColor="'#cfe4ff'"
+            :plotId="'humidityGraph'"
+          />
+        </div>
+        <div v-if="getSelectedButton('humidity') === 'chart'">
+          <MeasurementBarChart
+            :apiRoute="'humidity'"
+            :field="'humidityPlot'"
+            :strokeColor="'#08fc34'"
+            :areaColor="'#cfe4ff'"
+            :plotId="'humidityGraph'"
+          />
+        </div>
       </article>
     </section>
 
     <footer class="text-center p-2">
       <ControlBar
         :hoverColor="'hover:bg-sharp-green'"
-        :borderColor="'border-sharp-green'"
+        :textColor="'text-sharp-green'"
         :field="'humidity'"
       />
     </footer>
@@ -36,8 +46,10 @@
 
 <script>
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
+import MeasurementBarChart from "./graphs/MeasurementBarChart.vue";
 import MeasurementValues from "./values/MeasurementValues.vue";
 import ControlBar from "./control/ControlBar.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "HumidityMain",
   props: {
@@ -45,8 +57,12 @@ export default {
   },
   components: {
     MeasurementGraphs,
+    MeasurementBarChart,
     MeasurementValues,
     ControlBar,
+  },
+  computed: {
+    ...mapGetters("control", ["getSelectedButton"]),
   },
   methods: {},
 };

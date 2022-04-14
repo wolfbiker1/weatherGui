@@ -18,16 +18,18 @@ export default {
     apiRoute: String,
   },
   computed: {
-    ...mapGetters("history", ["getHistory"]),
+    ...mapGetters("history", ["getHistory", "historyIsLoaded"]),
     getCurrentHistory() {
       return this.getHistory(this.apiRoute);
     },
   },
   mounted() {
+
     this.fetchHist();
 
+
+      //this.drawPlot();
     setInterval(() => {
-      this.drawPlot();
     }, 15000);
   },
   data() {
@@ -38,18 +40,25 @@ export default {
   methods: {
     ...mapActions("history", ["fetchHistory"]),
     fetchHist() {
-      this.fetchHistory(this.apiRoute).then(() => {
+      if (!this.historyIsLoaded) {
+            this.fetchHistory(this.apiRoute).then(() => {
+            this.drawPlot();
+        });
+      } else {
         this.drawPlot();
-      });
+      }
+      //this.fetchHistory(this.apiRoute).then(() => {
+      //  this.drawPlot();
+      //});
     },
     createDataLine(x, y) {
       return d3
         .line()
         .x(function (d) {
-          return x(new Date(d.x));
+          return x(new Date(d.date_of_record));
         })
         .y(function (d) {
-          return y(d.y);
+          return y(d.value);
         })
         .curve(d3.curveMonotoneX);
     },
@@ -57,11 +66,11 @@ export default {
       return d3
         .area()
         .x(function (d) {
-          return x(new Date(d.x));
+          return x(new Date(d.date_of_record));
         })
         .y0(window.height)
         .y1(function (d) {
-          return y(d.y);
+          return y(d.value);
         });
     },
     createXAxis(start, end, window) {
@@ -76,8 +85,8 @@ export default {
     setUpWindow() {
       const margin = { top: 20, right: 20, bottom: 50, left: 70 };
       return {
-        width: 500 - margin.left - margin.right,
-        height: 300 - margin.top - margin.bottom,
+        width: window.innerWidth / 4 - margin.left - margin.right,
+        height: window.innerHeight / 3 - margin.top - margin.bottom,
         margin: margin,
       };
     },
@@ -87,20 +96,21 @@ export default {
     },
     drawPlot() {
       const dataset = this.getCurrentHistory;
-      // console.log(dataset);
       this.removePlot();
 
       // set the dimensions and margins of the graph
       const window = this.setUpWindow();
-      const start = this.getCurrentHistory[0].x;
-      const end = this.getCurrentHistory[this.getCurrentHistory.length - 1].x;
+      const start = this.getCurrentHistory[0].date_of_record;
+      const end =
+        this.getCurrentHistory[this.getCurrentHistory.length - 1]
+          .date_of_record;
 
       /*** DO NOT DELETE!!!! ***/
       // short time period
       var x = this.createXAxis(start, end, window);
 
       const getYs = () => {
-        return dataset.map((e) => e.y);
+        return dataset.map((e) => e.value);
       };
       const y = this.createYAxis(
         Math.min(...getYs()),
@@ -112,11 +122,11 @@ export default {
       const area = d3
         .area()
         .x(function (d) {
-          return x(new Date(d.x));
+          return x(new Date(d.date_of_record));
         })
         .y0(window.height)
         .y1(function (d) {
-          return y(d.y);
+          return y(d.value);
         });
       // few days
       this.mode = 0;
@@ -179,7 +189,12 @@ export default {
             .tickFormat(
               this.mode === 0 ? d3.timeFormat("%H:%M") : d3.timeFormat("%d/%m")
             )
-        );
+        )
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-65)");
 
       // Add the y Axis
       svg

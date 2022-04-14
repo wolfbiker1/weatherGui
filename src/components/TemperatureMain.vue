@@ -1,33 +1,46 @@
 <template>
   <div>
     <header class="text-center m-2">
-      <h1 class="text-3xl text-white">Outdoor Temperature</h1>
+      <h1 class="text-3xl text-white"><i>Temperature</i></h1>
     </header>
     <section>
       <div class="pressureval pl-2 m-2 mt-8">
         <MeasurementValues
           :color="'text-sharp-yellow'"
-          :field="'temp'"
+          :field="'temperature'"
           :unit="'°C'"
         />
       </div>
 
-      <article class="p-2 m-2">
+      <article class="p-2 m-2 ml-12">
+        <!-- <div v-if="getSelectedButton('temperature') === 'graph'"> -->
         <MeasurementGraphs
-          :apiRoute="'temp'"
+          v-if="getSelectedButton('temperature') === 'graph'"
+          :apiRoute="'temperature'"
           :field="'tempPlot'"
           :strokeColor="'#fcd408'"
           :areaColor="'#cfe4ff'"
           :plotId="'tempGraph'"
         />
+        <!-- </div> -->
+        <!-- <div v-else-if="getSelectedButton('temperature') === 'chart'"> -->
+        <MeasurementBarChart
+          v-else
+          :apiRoute="'temperature'"
+          :field="'tempPlot'"
+          :strokeColor="'#fcd408'"
+          :areaColor="'#cfe4ff'"
+          :plotId="'tempGraph'"
+        />
+        <!-- </div> -->
       </article>
     </section>
 
     <footer class="text-center p-2">
       <ControlBar
         :hoverColor="'hover:bg-sharp-yellow'"
-        :borderColor="'border-sharp-yellow'"
-        :field="'temp'"
+        :textColor="'text-sharp-yellow'"
+        :field="'temperature'"
       />
     </footer>
   </div>
@@ -35,8 +48,12 @@
 
 <script>
 import MeasurementGraphs from "./graphs/MeasurementGraphs.vue";
+import MeasurementBarChart from "./graphs/MeasurementBarChart.vue";
+
 import MeasurementValues from "./values/MeasurementValues.vue";
 import ControlBar from "./control/ControlBar.vue";
+import { mapGetters } from "vuex";
+
 export default {
   name: "TemperatureMain",
   props: {
@@ -44,8 +61,12 @@ export default {
   },
   components: {
     MeasurementGraphs,
+    MeasurementBarChart,
     MeasurementValues,
     ControlBar,
+  },
+  computed: {
+    ...mapGetters("control", ["getSelectedButton"]),
   },
   methods: {},
 };

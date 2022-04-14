@@ -1,110 +1,69 @@
 <template>
   <div class="inline-flex gap-6">
-    <button
-      class="text-gray-300 font-bold py-1 px-4 border rounded"
-      :class="[borderColor, hoverColor]"
-    >
-      -24h
+    <button class="font-bold py-1 px-4 mb-1 rounded">
+      <span class="ml-8 mr-8" @click="foo">
+        <i class="fas fa-chevron-left" :class="isSelected('minus')"></i>
+      </span>
+      <span
+        class="ml-8 mr-8"
+        @click="selectGraph({ field: field, pressedButton: 'chart' })"
+      >
+        <i
+          class="fas fa-chart-bar"
+          :class="[
+            this.getSelectedButton(field) === 'chart' ? this.textColor : 'red',
+          ]"
+        ></i>
+      </span>
+      <span
+        class="ml-8 mr-8"
+        @click="selectGraph({ field: field, pressedButton: 'graph' })"
+      >
+        <i
+          class="fas fa-chart-line"
+          :class="[
+            this.getSelectedButton(field) === 'graph' ? this.textColor : 'red',
+          ]"
+        ></i>
+      </span>
+      <span class="ml-8 mr-8" @click="foo()">
+        <i class="fas fa-chevron-right" :class="isSelected('plus')"></i>
+      </span>
     </button>
-    <button
-      class="text-gray-300 font-bold py-1 px-4 border rounded"
-      :class="[borderColor, hoverColor]"
-    >
-      trend
-    </button>
-
-    <div class="dropdown inline-block relative">
-      <button
-        :class="borderColor"
-        class="
-          text-gray-300
-          font-semibold
-          py-1
-          px-1
-          border
-          rounded
-          inline-flex
-          items-center
-        "
-      >
-        <span class="mr-1" v-if="isReady">Start Date</span>
-        <span class="mr-1" v-else>Loading...</span>
-      </button>
-      <ul
-        v-if="isReady"
-        class="dropdown-menu absolute hidden text-gray-700 pt-1"
-      >
-        <li v-for="x in getAvailableDates(field)" :key="x">
-          <span
-            class="text-gray-300 hover:bg-gray-700"
-            :class="[borderColor]"
-            @click="setDate()"
-          >
-            {{ x }}
-          </span>
-        </li>
-      </ul>
-    </div>
-
-    <div class="dropdown inline-block relative">
-      <button
-        :class="borderColor"
-        class="
-          text-gray-300
-          font-semibold
-          py-1
-          px-1
-          border
-          rounded
-          inline-flex
-          items-center
-        "
-      >
-        <span class="mr-1" v-if="isReady">End Date</span>
-        <span class="mr-1" v-else>Loading...</span>
-      </button>
-      <ul
-        v-if="isReady"
-        class="dropdown-menu absolute hidden text-gray-700 pt-1"
-      >
-        <li v-for="x in getAvailableDates(field)" :key="x">
-          <span
-            class="text-gray-300 hover:bg-gray-700"
-            :class="[borderColor]"
-            @click="setDate()"
-          >
-            {{ x }}
-          </span>
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
   props: {
     field: String,
-    borderColor: String,
+    textColor: String,
     hoverColor: String,
   },
   mounted() {
-    // this.fetchAvailableDates(this.field);
     setTimeout(() => {
-      this.getAvailableDates(this.field);
-      this.isReady = true;
+      //this.getAvailableDates(this.field);
+      //this.isReady = true;
     }, 1000);
-    // console.log(this.getAvailableDates());
   },
   computed: {
     ...mapGetters("history", ["getBoundary", "getAvailableDates"]),
+    ...mapGetters("control", ["getSelectedButton"]),
   },
   methods: {
     ...mapActions("history", ["fetchAvailableDates"]),
-    setDate() {
-      console.log("foo...");
+    ...mapMutations("control", ["setSelectedButton"]),
+    selectGraph(payload) {
+      this.setSelectedButton(payload);
+      this.$forceUpdate();
+    },
+    isSelected(buttonName) {
+      return this.getSelectedButton(this.field) === buttonName;
+    },
+    foo() {
+      console.log(this.getSelectedButton("temperature"));
     },
   },
   data() {
