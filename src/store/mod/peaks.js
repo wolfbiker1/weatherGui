@@ -3,24 +3,24 @@ import axios from "axios";
 const state = () => ({
   peakData: {
     pressure: {
-      max: 0.0,
-      avg: 0.0,
-      min: 0.0,
+      max: [0.0, "0.0"],
+      avg: [0.0, "0.0"],
+      min: [0.0, "0.0"],
     },
     temperature: {
-      max: 0.0,
-      avg: 0.0,
-      min: 0.0,
+      max: [0.0, "0.0"],
+      avg: [0.0, "0.0"],
+      min: [0.0, "0.0"],
     },
     humidity: {
-      max: 0.0,
-      avg: 0.0,
-      min: 0.0,
+      max: [0.0, "0.0"],
+      avg: [0.0, "0.0"],
+      min: [0.0, "0.0"],
     },
     brightness: {
-      max: 0.0,
-      avg: 0.0,
-      min: 0.0,
+      max: [0.0, "0.0"],
+      avg: [0.0, "0.0"],
+      min: [0.0, "0.0"],
     },
   },
   isEmpty: true,
@@ -46,7 +46,15 @@ const getters = {
 
 const mutations = {
   storePeakData(state, peakData) {
-    state.peakData = peakData;
+    peakData.forEach((p) => {
+      const ct = JSON.parse(p);
+      const header = Object.keys(ct)[0];
+      const ident = ct[header].ident;
+      const val = ct[header].content.val;
+      const date = ct[header].content.date;
+      state.peakData[header][ident][0] = val;
+      state.peakData[header][ident][1] = date;
+    });
     state.isEmpty = false;
   },
 };
@@ -54,13 +62,7 @@ const mutations = {
 const actions = {
   fetchPeakData({ commit }) {
     axios.get("/peaks").then((res) => {
-      let peakData = {};
-      res.data.forEach((element) => {
-        const ct = JSON.parse(element);
-        const header = Object.keys(ct)[0];
-        peakData[header] = ct[header].content;
-      });
-      commit("storePeakData", peakData);
+      commit("storePeakData", res.data);
     });
   },
 };

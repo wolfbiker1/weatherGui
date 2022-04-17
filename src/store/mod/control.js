@@ -9,7 +9,6 @@ const state = () => ({
 
 const getters = {
   getSelectedButton: (state) => (field) => {
-    console.log(field);
     return state.selectedButton[field];
   },
 };
