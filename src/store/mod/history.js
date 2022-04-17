@@ -41,6 +41,12 @@ const state = () => ({
     humidity: [],
     brightness: [],
   },
+  pastValues: {
+    temperature: 0.0,
+    pressure: 0.0,
+    humidity: 0.0,
+    brightness: 0.0,
+  },
   trends: {
     temperature: 0.0,
     pressure: 0.0,
@@ -100,7 +106,7 @@ const state = () => ({
 
 const getters = {
   historyIsLoaded(state) {
-    return state.historyIsLoaded
+    return state.historyIsLoaded;
   },
   getTrend: (state) => (field) => {
     return state.trends[field];
@@ -110,6 +116,14 @@ const getters = {
   },
   getBarChart: (state) => (field) => {
     return state.barChart[field];
+  },
+  getPastValues: (state) => (field) => {
+    // axios too slow
+    if (state.pastValues[field] == 0) {
+      return 0;
+    } else {
+      return JSON.parse(state.pastValues[field][0]);
+    }
   },
   getAvailableDates: (state) => (field) => {
     return JSON.parse(state.dates[field]);
@@ -157,6 +171,9 @@ const mutations = {
   storeTrendValue(state, payload) {
     state.trends[payload.field] = payload.trendValue;
   },
+  storePastValue(state, payload) {
+    state.pastValues[payload.field] = payload.pastValue;
+  },
   storeBarChart(state, payload) {
     state.barChart[payload.field] = payload.barChartValues;
   },
@@ -194,6 +211,11 @@ const actions = {
         });
         commit("storeCurrentHistory", { field: field, data: dataAsJson });
       });
+  },
+  async fetchPastValue({ commit }, field) {
+    return axios.get(`/past/for/${field}/24`).then((res) => {
+      commit("storePastValue", { field: field, pastValue: res.data });
+    });
   },
 };
 

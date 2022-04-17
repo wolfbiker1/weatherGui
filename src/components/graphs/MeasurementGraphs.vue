@@ -24,13 +24,10 @@ export default {
     },
   },
   mounted() {
-
     this.fetchHist();
 
-
-      //this.drawPlot();
-    setInterval(() => {
-    }, 15000);
+    //this.drawPlot();
+    setInterval(() => {}, 15000);
   },
   data() {
     return {
@@ -41,8 +38,8 @@ export default {
     ...mapActions("history", ["fetchHistory"]),
     fetchHist() {
       if (!this.historyIsLoaded) {
-            this.fetchHistory(this.apiRoute).then(() => {
-            this.drawPlot();
+        this.fetchHistory(this.apiRoute).then(() => {
+          this.drawPlot();
         });
       } else {
         this.drawPlot();
@@ -83,7 +80,7 @@ export default {
       return d3.scaleLinear().domain([start, end]).range([window.height, 0]);
     },
     setUpWindow() {
-      const margin = { top: 20, right: 20, bottom: 50, left: 70 };
+      const margin = { top: 20, right: 20, bottom: 50, left: 90 };
       return {
         width: window.innerWidth / 4 - margin.left - margin.right,
         height: window.innerHeight / 3 - margin.top - margin.bottom,
